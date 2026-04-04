@@ -90,7 +90,7 @@
     .hero {
       position: relative;
       padding-top: 24px; 
-      padding-bottom: 0;
+      padding-bottom: 112px; /* Respiro essencial para transição limpa entre dobras */
     }
     .hero h1 { animation: textReveal 1.2s cubic-bezier(.16,1,.3,1) .3s both; margin: 0; }
     
@@ -131,7 +131,10 @@
     }
     
     @media (max-width: 920px) {
-      .hero { padding-top: 32px; }
+      .hero { 
+        padding-top: 32px; 
+        padding-bottom: 72px; /* Respiro proporcional para telas móveis */
+      }
       .hero-grid { align-items: center; } /* Removemos o stretch em mobile pois as colunas empilham */
       .hero-particles .orb { filter: blur(40px); }
     }
