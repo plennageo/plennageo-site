@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design System V2 — Alta Precisão & Motion</title>
+  <meta name="description" content="Living design system combining Alta Precisão styles with Gemini animations and Glass effects." />
+  
+  <!-- CSS from Alta Precisão (adjusted path since this file is in assets/) -->
+  <link rel="stylesheet" href="css/style.css" />
+  
+  <!-- Scripts and CSS from Gemini Animation and Glass Effect templates -->
+  <!-- Note: Adjusting paths relative to the assets folder -->
+  <script src="../templates/animations-gemini/assets/resource_3fa48481346f.js"></script>
+  <script src="../templates/animations-gemini/assets/iconify-icon_e19829e7f0e8.js"></script>
+
+  <style>
+    /* ── BASE & VARIABLES ── */
+    :root {
+      --bg-deep: #050505;
+      --brand: #2c7a5a;
+      --brand-2: #1e5a43;
+      --text: #1b2430;
+      --text-soft: #5b6878;
+      --surface: #ffffff;
+      --surface-2: #f3f6f8;
+      --line: #dfe6ec;
+      --glass-bg: rgba(23, 23, 23, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glow-color: rgba(44, 122, 90, 0.4);
+    }
+    
+    body {
+      background-color: var(--bg-deep);
+      color: #e5e5e5;
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* ── ANIMATIONS (Gemini) ── */
+    @keyframes animationIn {
+      0% { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+      100% { opacity: 1; transform: translateY(0); filter: blur(0px); }
+    }
+    .animate-on-scroll { animation-play-state: paused !important; }
+    .animate-on-scroll.animate { animation-play-state: running !important; }
+    
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee { animation: marquee 40s linear infinite; }
+    
+    @keyframes shimmer {
+      from { transform: translateX(-100%) skewX(-15deg); }
+      to { transform: translateX(200%) skewX(-15deg); }
+    }
+    
+    /* ── FLASHLIGHT EFFECT ── */
+    .flashlight-card { 
+      background: rgba(255, 255, 255, 0.02);
+      position: relative;
+      overflow: hidden;
+    }
+    .flashlight-card::before {
+      content: "";
+      position: absolute;
+      inset: 0px;
+      background: radial-gradient(
+        800px circle at var(--mouse-x) var(--mouse-y),
+        var(--glow-color),
+        transparent 40%
+      );
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .flashlight-card:hover::before { opacity: 1; }
+
+    /* ── GLASS & PREMIUM UI ── */
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+    }
+    .glass-effect {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .gradient-text {
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      background-image: linear-gradient(135deg, #fff, #a3a3a3);
+    }
+
+    .ds-nav {
+      position: sticky; top: 0; z-index: 60;
+      display: flex; align-items: center; gap: 6px;
+      padding: 18px 24px;
+      background: rgba(5, 5, 5, 0.85); backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      justify-content: center;
+    }
+    .ds-nav a {
+      display: inline-flex; align-items: center; padding: 10px 20px;
+      border-radius: 99px; font-size: 0.85rem; font-weight: 600; color: #a3a3a3;
+      background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .ds-nav a:hover { background: var(--brand); color: #fff; box-shadow: 0 0 15px var(--glow-color); transform: translateY(-2px); }
+
+    /* ── SECTIONS ── */
+    .ds-section {
+      padding: 100px 0;
+      position: relative;
+    }
+    
+    .ds-label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--brand); margin-bottom: 14px;
+    }
+    .ds-label::before {
+      content: ""; width: 36px; height: 2px; background: var(--brand); display: block;
+    }
+    .ds-title {
+      font-size: clamp(2.5rem, 4vw, 4rem); line-height: 1.05; letter-spacing: -0.03em;
+      margin-bottom: 40px; color: #fff; font-weight: 600;
+    }
+    .ds-desc { font-size: 1.1rem; color: #a3a3a3; max-width: 660px; margin-bottom: 50px; line-height: 1.6; }
+
+    /* ── TYPOGRAPHY TABLE ── */
+    .ds-type-table { width: 100%; border-collapse: collapse; }
+    .ds-type-table tr { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .ds-type-table td { padding: 24px 0; vertical-align: middle; color: #e5e5e5; }
+    .ds-type-table .ds-type-name { width: 180px; font-size: 0.85rem; font-weight: 700; color: #a3a3a3; text-transform: uppercase; letter-spacing: 0.08em; }
+    .ds-type-table .ds-type-spec { text-align: right; font-size: 0.85rem; color: var(--brand); }
+
+    /* ── COLORS ── */
+    .ds-color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 24px; }
+    .ds-swatch { border-radius: 20px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); }
+    .ds-swatch-fill { height: 120px; display: flex; align-items: flex-end; padding: 16px; }
+    .ds-swatch-fill span { font-size: 0.75rem; font-weight: 700; padding: 6px 14px; border-radius: 99px; background: rgba(255, 255, 255, 0.9); color: #000; }
+    .ds-swatch-info { padding: 16px; }
+    .ds-swatch-info strong { display: block; font-size: 0.95rem; color: #fff; margin-bottom: 4px; }
+    .ds-swatch-info code { font-size: 0.8rem; color: #a3a3a3; }
+
+    /* ── COMPONENTS ── */
+    .ds-component-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
+    
+    .ds-btn-glow {
+      position: relative; display: inline-flex; align-items: center; justify-content: center;
+      padding: 16px 32px; font-weight: 600; color: #fff; background: var(--brand);
+      border-radius: 99px; overflow: hidden; transition: all 0.3s;
+    }
+    .ds-btn-glow .shimmer-layer {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: skewX(-15deg) translateX(-100%); transition: 0.5s;
+    }
+    .ds-btn-glow:hover {
+      box-shadow: 0 0 25px var(--glow-color); transform: translateY(-3px);
+    }
+    .ds-btn-glow:hover .shimmer-layer { animation: shimmer 1.5s infinite; }
+
+    /* ── GLASS CARD COMPONENT ── */
+    .ds-glass-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 24px;
+      padding: 32px; backdrop-filter: blur(20px); position: relative;
+      overflow: hidden; transition: 0.4s ease;
+    }
+    .ds-glass-card:hover { transform: translateY(-5px); border-color: var(--brand); box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 20px var(--glow-color); }
+    
+    .stat-value { font-size: 2rem; font-weight: 700; line-height: 1.1; }
+    .stat-label { font-size: 0.75rem; letter-spacing: 0.05em; color: #a3a3a3; text-transform: uppercase; margin-top: 4px; }
+
+    /* Utilities */
+    .ring-glow { position: absolute; border-radius: 50%; opacity: 0; transition: 0.5s; box-shadow: 0 0 40px var(--brand); }
+    .group:hover .ring-glow { opacity: 0.5; transform: scale(1.2); }
+  </style>
+</head>
+<body class="antialiased font-inter">
+
+  <!-- ═══════ NAV ═══════ -->
+  <nav class="ds-nav" aria-label="Design system navigation">
+    <a href="#ds-hero">Hero</a>
+    <a href="#ds-typography">Typography</a>
+    <a href="#ds-colors">Colors</a>
+    <a href="#ds-components">Components</a>
+    <a href="#ds-motion">Motion</a>
+  </nav>
+
+  <!-- ═══════ 0 · HERO SHOWCASE ═══════ -->
+  <section class="ds-section h-screen flex items-center justify-center relative overflow-hidden" id="ds-hero">
+    <!-- Animated Background Gradients -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--brand-2)_0%,_var(--bg-deep)_70%)] opacity-30"></div>
+    <div class="absolute inset-0 z-0">
+       <div class="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-[var(--brand)] rounded-full mix-blend-screen filter blur-[120px] opacity-20 animate-pulse"></div>
+       <div class="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-[#80d1a8] rounded-full mix-blend-screen filter blur-[100px] opacity-10"></div>
+    </div>
+
+    <div class="container relative z-10 mx-auto px-6 max-w-7xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <!-- Copy -->
+        <div class="animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both] animate">
+          <div class="ds-label">Design System V2</div>
+          <h1 class="text-6xl lg:text-7xl font-bold tracking-tight mb-6 text-white leading-tight">
+            Precisão Aliada<br>à <span class="gradient-text">Inovação Visual</span>
+          </h1>
+          <p class="text-xl text-neutral-400 mb-10 max-w-lg leading-relaxed">
+            Uma fusão do robusto sistema Alta Precisão com efeitos Glassmorphism de última geração e interações coreografadas pelo Gemini Motion.
+          </p>
+          <div class="flex gap-4">
+            <a href="#ds-components" class="ds-btn-glow">
+              <span class="shimmer-layer"></span>
+              <span class="relative z-10 flex items-center gap-2">
+                Explorar Componentes 
+                <iconify-icon icon="solar:arrow-right-bold-duotone"></iconify-icon>
+              </span>
+            </a>
+            <a href="#ds-typography" class="ds-btn-glow" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+              <span class="relative z-10 text-white">Ver Tipografia</span>
+            </a>
+          </div>
+          
+          <div class="mt-16 flex gap-8 border-t border-white/10 pt-8">
+            <div class="text-white">
+              <div class="text-3xl font-bold">120+</div>
+              <div class="text-sm text-neutral-400 mt-1 uppercase tracking-widest">Componentes</div>
+            </div>
+            <div class="text-white">
+              <div class="text-3xl font-bold">60FPS</div>
+              <div class="text-sm text-neutral-400 mt-1 uppercase tracking-widest">Animações fluidas</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Glass / Motion Visual -->
+        <div class="animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both] animate relative group">
+          <!-- Back Card -->
+          <div class="absolute inset-0 bg-gradient-to-br from-[var(--brand)] to-[var(--brand-2)] rounded-[2rem] transform rotate-3 scale-105 opacity-50 blur-lg transition duration-700 group-hover:rotate-6 group-hover:scale-110"></div>
+          
+          <!-- Front Glass Card -->
+          <div class="relative glass-panel p-10 h-full flex flex-col justify-between" style="min-height: 500px;">
+            <div class="flex justify-between items-start mb-12">
+              <div class="w-12 h-12 rounded-2xl bg-white/10 flex flex-center items-center justify-center border border-white/20">
+                <iconify-icon icon="solar:layers-minimalistic-bold-duotone" class="text-2xl text-[var(--brand)]"></iconify-icon>
+              </div>
+              <span class="px-4 py-1 rounded-full bg-white/10 text-xs text-white tracking-widest uppercase border border-white/10">Ao Vivo</span>
+            </div>
+            
+            <div>
+              <h3 class="text-3xl font-bold text-white mb-4">Mapeamento Inteligente</h3>
+              <p class="text-neutral-400 mb-8">Processamento de dados topográficos com interface de altíssima performance.</p>
+              
+              <div class="space-y-4">
+                <div class="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-[var(--brand)] to-[#80d1a8] w-[75%] rounded-full shadow-[0_0_10px_var(--glow-color)]"></div>
+                </div>
+                <div class="flex justify-between text-xs text-neutral-500 font-mono">
+                  <span>Processando nuvem de pontos...</span>
+                  <span class="text-white">75%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ 1 · TYPOGRAPHY ═══════ -->
+  <section class="ds-section" id="ds-typography" style="background: rgba(255,255,255,0.02)">
+    <div class="container mx-auto px-6 max-w-7xl">
+      <div class="animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+        <div class="ds-label">Typography</div>
+        <h2 class="ds-title">Escala Tipográfica</h2>
+        <p class="ds-desc">Sistema fluido utilizando font-family 'Inter' como principal e 'Plus Jakarta Sans' para destaques. Valores calculados para todas as resoluções.</p>
+      </div>
+
+      <div class="glass-panel p-8 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+        <table class="ds-type-table">
+          <tbody>
+            <tr>
+              <td class="ds-type-name">Display 1</td>
+              <td><h1 class="text-6xl font-bold text-white tracking-tight">Levantamentos Premium</h1></td>
+              <td class="ds-type-spec">Inter / 6xl / 700 / -3%</td>
+            </tr>
+            <tr>
+              <td class="ds-type-name">Heading 2</td>
+              <td><h2 class="text-4xl font-semibold text-white">Soluções Técnicas</h3></td>
+              <td class="ds-type-spec">Inter / 4xl / 600</td>
+            </tr>
+            <tr>
+              <td class="ds-type-name">Heading 3</td>
+              <td><h3 class="text-2xl font-medium text-white">Diagnóstico de Área</h3></td>
+              <td class="ds-type-spec">Inter / 2xl / 500</td>
+            </tr>
+            <tr>
+              <td class="ds-type-name">Body Large</td>
+              <td><p class="text-lg text-neutral-300">Estrutura baseada em dados reais do local para execução de obras civil.</p></td>
+              <td class="ds-type-spec">Inter / 1.125rem / 400</td>
+            </tr>
+            <tr>
+              <td class="ds-type-name">Body Default</td>
+              <td><p class="text-base text-neutral-400">Entendimento prévio do problema antes do envio da proposta técnica e ida ao campo.</p></td>
+              <td class="ds-type-spec">Inter / 1rem / 400</td>
+            </tr>
+            <tr>
+              <td class="ds-type-name">Eyebrow / Label</td>
+              <td><span class="uppercase tracking-[0.15em] text-xs font-bold text-[var(--brand)]">Topografia</span></td>
+              <td class="ds-type-spec">Inter / 0.75rem / 700 / 0.15em</td>
+            </tr>
+            <tr>
+              <td class="ds-type-name">Data / Mono</td>
+              <td><code class="font-mono text-sm text-[#80d1a8] bg-white/5 py-1 px-2 rounded">COORD_X: 748392.12</code></td>
+              <td class="ds-type-spec">Mono / 0.875rem</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ 2 · COLORS ═══════ -->
+  <section class="ds-section" id="ds-colors">
+    <div class="container mx-auto px-6 max-w-7xl">
+      <div class="animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+        <div class="ds-label">Color System</div>
+        <h2 class="ds-title">Paleta Semântica e Superfícies</h2>
+        <p class="ds-desc">Cores ajustadas para contrastes perfeitos em dark mode. Uso de transparências para efeitos glassmorphism e glows reflexivos.</p>
+      </div>
+
+      <div class="ds-color-grid animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+        <!-- Primary -->
+        <div class="ds-swatch flashlight-card" onmousemove="updateMouse(event, this)">
+          <div class="ds-swatch-fill" style="background: var(--brand)"><span>#2C7A5A</span></div>
+          <div class="ds-swatch-info">
+            <strong>Primary Brand</strong>
+            <code>--brand (Botões, ícones)</code>
+          </div>
+        </div>
+        
+        <!-- Accents -->
+        <div class="ds-swatch flashlight-card" onmousemove="updateMouse(event, this)">
+          <div class="ds-swatch-fill" style="background: #80d1a8"><span>#80D1A8</span></div>
+          <div class="ds-swatch-info">
+            <strong>Brand Light</strong>
+            <code>Destaques e Glows</code>
+          </div>
+        </div>
+        
+        <!-- Backgrounds -->
+        <div class="ds-swatch flashlight-card" onmousemove="updateMouse(event, this)">
+          <div class="ds-swatch-fill" style="background: var(--bg-deep)"><span>#050505</span></div>
+          <div class="ds-swatch-info">
+            <strong>Deep Space</strong>
+            <code>--bg-deep (Background)</code>
+          </div>
+        </div>
+        
+        <!-- Surfaces -->
+        <div class="ds-swatch flashlight-card" onmousemove="updateMouse(event, this)">
+          <div class="ds-swatch-fill" style="background: var(--glass-bg); backdrop-filter: blur(10px)"><span>Glass</span></div>
+          <div class="ds-swatch-info">
+            <strong>Glass Surface</strong>
+            <code>rgba(23,23,23,0.6) + blur</code>
+          </div>
+        </div>
+
+        <div class="ds-swatch flashlight-card" onmousemove="updateMouse(event, this)">
+          <div class="ds-swatch-fill" style="background: #1b2430"><span>#1B2430</span></div>
+          <div class="ds-swatch-info">
+            <strong>UI Card Dark</strong>
+            <code>--text base in original</code>
+          </div>
+        </div>
+
+        <div class="ds-swatch flashlight-card" onmousemove="updateMouse(event, this)">
+          <div class="ds-swatch-fill" style="background: #ffffff"><span>#FFFFFF</span></div>
+          <div class="ds-swatch-info">
+            <strong>White Text</strong>
+            <code>Texto principal</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ 3 · COMPONENTS & ICONS ═══════ -->
+  <section class="ds-section" id="ds-components" style="background: rgba(255,255,255,0.02)">
+    <div class="container mx-auto px-6 max-w-7xl">
+      <div class="animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+        <div class="ds-label">UI Components & Icons</div>
+        <h2 class="ds-title">Componentes Interativos</h2>
+        <p class="ds-desc">Mistura da estrutura da Alta Precisão com hover states avançados, glows e glassmorphism.</p>
+      </div>
+
+      <div class="ds-component-grid">
+        
+        <!-- Cards Showcase -->
+        <div class="space-y-8 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+          <h3 class="text-xl font-bold text-white mb-6 border-b border-white/10 pb-4">A. Glass Service Cards</h3>
+          
+          <article class="ds-glass-card flashlight-card group" onmousemove="updateMouse(event, this)">
+            <div class="w-14 h-14 rounded-full bg-[var(--brand)]/10 flex items-center justify-center mb-6 border border-[var(--brand)]/20 transition-transform duration-500 group-hover:scale-110">
+              <iconify-icon icon="solar:compass-bold-duotone" class="text-3xl text-[var(--brand)]"></iconify-icon>
+            </div>
+            <span class="inline-block px-3 py-1 rounded-full bg-[#80d1a8]/10 text-[#80d1a8] text-xs font-bold uppercase tracking-widest mb-4 border border-[#80d1a8]/20">Levantamento</span>
+            <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-[var(--brand)] transition-colors">Precisão Planialtimétrica</h3>
+            <p class="text-neutral-400">Modelos de elevação altamente detalhados, ideais para segurança e regularização do terreno.</p>
+            
+            <div class="mt-8 pt-6 border-t border-white/10 flex justify-between items-center opacity-60 group-hover:opacity-100 transition-opacity">
+              <span class="text-sm font-mono text-white">ISO: 9001:2015</span>
+              <iconify-icon icon="solar:arrow-right-line-duotone" class="text-xl text-white transform group-hover:translate-x-2 transition-transform"></iconify-icon>
+            </div>
+          </article>
+        </div>
+
+        <!-- Buttons & Inputs & Badges -->
+        <div class="space-y-12 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.4s_both]">
+          
+          <div>
+            <h3 class="text-xl font-bold text-white mb-6 border-b border-white/10 pb-4">B. Botões & Ações</h3>
+            <div class="flex flex-wrap gap-4 items-center">
+              <button class="ds-btn-glow group">
+                <span class="shimmer-layer"></span>
+                <span class="relative z-10 flex items-center gap-2">
+                  <iconify-icon icon="solar:document-add-bold-duotone" class="text-xl"></iconify-icon>
+                  Solicitar Orçamento
+                </span>
+              </button>
+              
+              <button class="px-6 py-4 rounded-full bg-white/5 border border-white/10 text-white font-medium hover:bg-white/10 hover:border-white/20 transition-all flex items-center gap-2">
+                Ver Projetos
+              </button>
+            </div>
+          </div>
+
+          <div>
+             <h3 class="text-xl font-bold text-white mb-6 border-b border-white/10 pb-4">C. Ícones (Solar Icons + Glow)</h3>
+             <div class="flex gap-6">
+                <div class="w-16 h-16 rounded-2xl glass-panel flex items-center justify-center group hover:bg-[var(--brand)]/20 transition cursor-pointer">
+                  <iconify-icon icon="solar:map-point-wave-bold-duotone" class="text-3xl text-[#80d1a8] group-hover:scale-110 transition-transform"></iconify-icon>
+                </div>
+                <div class="w-16 h-16 rounded-2xl glass-panel flex items-center justify-center group hover:bg-[var(--brand)]/20 transition cursor-pointer">
+                  <iconify-icon icon="solar:ruler-cross-pen-bold-duotone" class="text-3xl text-[#80d1a8] group-hover:scale-110 transition-transform"></iconify-icon>
+                </div>
+                <div class="w-16 h-16 rounded-2xl glass-panel flex items-center justify-center group hover:bg-[var(--brand)]/20 transition cursor-pointer">
+                  <iconify-icon icon="solar:satellite-bold-duotone" class="text-3xl text-[#80d1a8] group-hover:scale-110 transition-transform"></iconify-icon>
+                </div>
+                <div class="w-16 h-16 rounded-2xl glass-panel flex items-center justify-center group hover:bg-[var(--brand)]/20 transition cursor-pointer">
+                  <iconify-icon icon="solar:drone-bold-duotone" class="text-3xl text-[#80d1a8] group-hover:scale-110 transition-transform"></iconify-icon>
+                </div>
+             </div>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold text-white mb-6 border-b border-white/10 pb-4">D. Inputs & Controles</h3>
+            <div class="relative">
+              <iconify-icon icon="solar:letter-bold-duotone" class="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500"></iconify-icon>
+              <input type="email" placeholder="Digite seu e-mail" class="w-full bg-black/40 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white focus:outline-none focus:border-[var(--brand)] focus:ring-1 focus:ring-[var(--brand)] transition-all placeholder:text-neutral-600">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ 4 · MOTION & BACKGROUNDS ═══════ -->
+  <section class="ds-section" id="ds-motion">
+    <div class="container mx-auto px-6 max-w-7xl">
+      <div class="animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+        <div class="ds-label">Motion System</div>
+        <h2 class="ds-title">Animações & Layouts Reais</h2>
+        <p class="ds-desc">Demonstração de scroll patterns, hover beams e flashlights.</p>
+      </div>
+
+      <!-- Infinite Marquee Section -->
+      <div class="relative w-full py-16 border-y border-white/5 bg-black/40 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both] overflow-hidden my-12 rounded-[2rem]">
+        <div class="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-[var(--bg-deep)] to-transparent"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-[var(--bg-deep)] to-transparent"></div>
+        
+        <div class="flex overflow-hidden w-full">
+          <div class="flex animate-marquee whitespace-nowrap gap-16 items-center px-8">
+            <div class="flex items-center gap-3 text-2xl font-bold text-white/30 uppercase tracking-widest"><iconify-icon icon="solar:globus-bold-duotone"></iconify-icon> Topografia RTK</div>
+            <div class="flex items-center gap-3 text-2xl font-bold text-white/30 uppercase tracking-widest"><iconify-icon icon="solar:route-bold-duotone"></iconify-icon> Georreferenciamento</div>
+            <div class="flex items-center gap-3 text-2xl font-bold text-white/30 uppercase tracking-widest"><iconify-icon icon="solar:home-smile-bold-duotone"></iconify-icon> Loteamento</div>
+            <div class="flex items-center gap-3 text-2xl font-bold text-white/30 uppercase tracking-widest"><iconify-icon icon="solar:document-text-bold-duotone"></iconify-icon> Regularização</div>
+            
+            <div class="flex items-center gap-3 text-2xl font-bold text-white/30 uppercase tracking-widest"><iconify-icon icon="solar:globus-bold-duotone"></iconify-icon> Topografia RTK</div>
+            <div class="flex items-center gap-3 text-2xl font-bold text-white/30 uppercase tracking-widest"><iconify-icon icon="solar:route-bold-duotone"></iconify-icon> Georreferenciamento</div>
+            <div class="flex items-center gap-3 text-2xl font-bold text-white/30 uppercase tracking-widest"><iconify-icon icon="solar:home-smile-bold-duotone"></iconify-icon> Loteamento</div>
+            <div class="flex items-center gap-3 text-2xl font-bold text-white/30 uppercase tracking-widest"><iconify-icon icon="solar:document-text-bold-duotone"></iconify-icon> Regularização</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Switching Layout Demo -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.4s_both]">
+        <div class="glass-panel p-12 relative flex items-center justify-center min-h-[400px] overflow-hidden group">
+          <div class="absolute inset-0 bg-[url('../images/hero-slide-01.webp')] bg-cover bg-center opacity-20 group-hover:scale-105 group-hover:opacity-30 transition-all duration-1000"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-deep)] to-transparent"></div>
+          <div class="relative z-10 text-center">
+            <h3 class="text-3xl font-bold text-white mb-4">Backgrounds Imersivos</h3>
+            <p class="text-neutral-400">Imagens sobrepostas com máscara linear, fade e scale sutil.</p>
+          </div>
+        </div>
+
+        <div class="glass-panel p-12 relative flex flex-col justify-center min-h-[400px] flashlight-card" onmousemove="updateMouse(event, this)">
+          <div class="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8">
+            <iconify-icon icon="solar:mouse-circle-bold-duotone" class="text-4xl text-[var(--brand)]"></iconify-icon>
+          </div>
+          <h3 class="text-3xl font-bold text-white mb-4">Flashlight Hover & Blur</h3>
+          <p class="text-neutral-400">Mova o cursor por este card para revelar a iluminação interativa baseada na posição geométrica <code>(x, y)</code> com radial-gradients.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    // Intersection Observer para animações
+    const once = true;
+    window.__inViewIO = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("animate");
+                if (once) window.__inViewIO.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    window.initInViewAnimations = function (selector = ".animate-on-scroll") {
+        document.querySelectorAll(selector).forEach((el) => {
+            window.__inViewIO.observe(el);
+        });
+    };
+    document.addEventListener("DOMContentLoaded", () => initInViewAnimations());
+
+    // Flashlight effect
+    function updateMouse(e, element) {
+        const rect = element.getBoundingClientRect();
+        element.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        element.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+    }
+  </script>
+
+</body>
+</html>

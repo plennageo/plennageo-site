@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design System 2.0 — Alta Precisão</title>
+  <meta name="description" content="Design system avançado com glassmorphism, animações Gemini e componentes interativos." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── DS2 ENHANCED ANIMATIONS ── */
+    @keyframes animationIn {
+      0% { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+      100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    @keyframes shimmer {
+      from { transform: translateX(-100%) skewX(-15deg); }
+      to { transform: translateX(200%) skewX(-15deg); }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(44,122,90,.3), 0 0 60px rgba(44,122,90,.1); }
+      50% { box-shadow: 0 0 40px rgba(44,122,90,.5), 0 0 100px rgba(44,122,90,.2); }
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes floatUp {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes borderRotate {
+      0% { --angle: 0deg; }
+      100% { --angle: 360deg; }
+    }
+    @keyframes fadeSlideUp {
+      0% { opacity:0; transform:translateY(40px) scale(.97); filter:blur(6px); }
+      100% { opacity:1; transform:translateY(0) scale(1); filter:blur(0); }
+    }
+    @keyframes orbitGlow {
+      0% { transform: rotate(0deg) translateX(180px) rotate(0deg); opacity:.6; }
+      50% { opacity:1; }
+      100% { transform: rotate(360deg) translateX(180px) rotate(-360deg); opacity:.6; }
+    }
+    @keyframes textReveal {
+      0% { clip-path: inset(0 100% 0 0); }
+      100% { clip-path: inset(0 0% 0 0); }
+    }
+    @keyframes scaleIn {
+      0% { transform: scale(.85); opacity:0; }
+      100% { transform: scale(1); opacity:1; }
+    }
+
+    /* ── ANIMATE ON SCROLL ── */
+    .anim-in { opacity:0; transform:translateY(30px); filter:blur(8px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1), filter .8s ease; }
+    .anim-in.is-visible { opacity:1; transform:translateY(0); filter:blur(0); }
+    .anim-in.d1 { transition-delay:.1s } .anim-in.d2 { transition-delay:.2s }
+    .anim-in.d3 { transition-delay:.3s } .anim-in.d4 { transition-delay:.4s }
+    .anim-in.d5 { transition-delay:.5s } .anim-in.d6 { transition-delay:.6s }
+
+    /* ── GLASSMORPHISM ── */
+    .glass-panel {
+      background: rgba(255,255,255,.04);
+      backdrop-filter: saturate(160%) blur(20px);
+      -webkit-backdrop-filter: saturate(160%) blur(20px);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius);
+    }
+    .glass-panel-light {
+      background: rgba(255,255,255,.65);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: var(--radius);
+    }
+    .glass-divider {
+      height:1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.35) 20%, rgba(255,255,255,.5) 50%, rgba(255,255,255,.35) 80%, transparent);
+    }
+
+    /* ── FLASHLIGHT CARD ── */
+    .flashlight-card { position:relative; overflow:hidden; }
+    .flashlight-card::before {
+      content:""; position:absolute; inset:0;
+      background: radial-gradient(600px circle at var(--mx) var(--my), rgba(44,122,90,.15), transparent 40%);
+      opacity:0; transition:opacity .5s; pointer-events:none; z-index:2;
+    }
+    .flashlight-card:hover::before { opacity:1; }
+
+    /* ── SHIMMER BUTTON ── */
+    .btn-shimmer { position:relative; overflow:hidden; }
+    .btn-shimmer::after {
+      content:""; position:absolute; top:0; left:0; width:100%; height:100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+      transform: translateX(-100%) skewX(-15deg);
+      transition: none;
+    }
+    .btn-shimmer:hover::after { animation: shimmer 1.2s ease forwards; }
+
+    /* ── GLOW EFFECTS ── */
+    .glow-brand { box-shadow: 0 0 20px rgba(44,122,90,.4), 0 0 60px rgba(44,122,90,.12); }
+    .glow-pulse { animation: pulseGlow 3s ease-in-out infinite; }
+
+    /* ── DS NAV ── */
+    .ds-nav{
+      position:sticky;top:0;z-index:50;
+      display:flex;align-items:center;gap:6px;
+      padding:10px 16px;overflow-x:auto;white-space:nowrap;
+      background:rgba(12,17,23,.92);backdrop-filter:saturate(160%) blur(12px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .ds-nav a{
+      display:inline-flex;align-items:center;min-height:38px;padding:0 16px;
+      border-radius:999px;font-size:.82rem;font-weight:700;color:#d0d9df;
+      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+      transition:background .2s,color .2s,box-shadow .3s;flex:0 0 auto;
+    }
+    .ds-nav a:hover{background:var(--brand);color:#fff;box-shadow:0 0 20px rgba(44,122,90,.3)}
+
+    /* ── DS SECTIONS ── */
+    .ds-section{padding:80px 0;position:relative;overflow:hidden}
+    .ds-section-dark{background:#0c1117;color:#fff}
+    .ds-section-soft{background:var(--surface-2)}
+    .ds-section-light{background:#fff}
+    .ds-label{
+      display:inline-flex;align-items:center;gap:10px;
+      font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--brand);margin-bottom:14px;
+    }
+    .ds-label::before{content:"";width:36px;height:2px;background:var(--brand);display:block;flex:0 0 auto}
+    .ds-title{font-size:clamp(2rem,3.6vw,3.2rem);line-height:1.02;letter-spacing:-.03em;margin-bottom:40px}
+    .ds-subtitle{font-size:1.2rem;line-height:1.2;margin-bottom:20px}
+    .ds-desc{font-size:1rem;color:var(--text-soft);max-width:660px;margin-bottom:40px}
+
+    /* ── DS GRIDS ── */
+    .ds-type-table{width:100%;border-collapse:collapse}
+    .ds-type-table tr{border-bottom:1px solid var(--line)}
+    .ds-type-table td{padding:22px 0;vertical-align:middle}
+    .ds-type-table .ds-type-name{width:180px;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-soft)}
+    .ds-type-table .ds-type-spec{width:140px;text-align:right;font-size:.82rem;font-weight:600;color:var(--text-soft);white-space:nowrap}
+    .ds-color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px}
+    .ds-swatch{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#fff;transition:transform .3s,box-shadow .3s}
+    .ds-swatch:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.1)}
+    .ds-swatch-fill{height:100px;display:flex;align-items:flex-end;padding:10px 14px}
+    .ds-swatch-fill span{font-size:.72rem;font-weight:700;letter-spacing:.06em;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.85);color:var(--text)}
+    .ds-swatch-info{padding:14px 16px}
+    .ds-swatch-info strong{display:block;font-size:.88rem}
+    .ds-swatch-info code{font-size:.78rem;color:var(--text-soft)}
+    .ds-component-row{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-bottom:28px}
+    .ds-state-box{display:flex;flex-direction:column;align-items:center;gap:6px}
+    .ds-state-label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-soft);margin-bottom:8px;text-align:center}
+    .ds-surface-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;margin-top:28px}
+    .ds-surface-card{border-radius:22px;padding:28px;min-height:140px;display:flex;flex-direction:column;justify-content:flex-end;transition:transform .3s}
+    .ds-surface-card:hover{transform:scale(1.02)}
+    .ds-surface-card strong{display:block;font-size:.92rem;margin-bottom:4px}
+    .ds-surface-card code{font-size:.78rem;opacity:.7}
+    .ds-motion-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+    .ds-motion-item{border-radius:22px;padding:28px;background:#fff;border:1px solid var(--line);box-shadow:0 10px 30px rgba(12,18,28,.06);text-align:center;transition:transform .3s,box-shadow .3s}
+    .ds-motion-item:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(12,18,28,.12)}
+    .ds-motion-item h3{margin-bottom:8px}
+    .ds-motion-item p{color:var(--text-soft);font-size:.92rem;margin-bottom:18px}
+    .ds-motion-item code{display:inline-block;padding:6px 14px;border-radius:12px;background:var(--surface-2);font-size:.78rem;color:var(--text-soft);margin-top:14px}
+
+    /* ── HERO BG PARTICLES ── */
+    .hero-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+    .hero-particles .orb{
+      position:absolute;border-radius:50%;filter:blur(60px);opacity:.4;
+    }
+    .hero-particles .orb-1{width:400px;height:400px;background:rgba(44,122,90,.35);top:-100px;left:-100px;animation:floatUp 8s ease-in-out infinite}
+    .hero-particles .orb-2{width:300px;height:300px;background:rgba(128,209,168,.2);bottom:-50px;right:-80px;animation:floatUp 10s ease-in-out infinite 2s}
+    .hero-particles .orb-3{width:200px;height:200px;background:rgba(44,122,90,.15);top:40%;left:60%;animation:floatUp 12s ease-in-out infinite 4s}
+
+    /* ── SECTION BG DECORATIONS ── */
+    .section-bg-dots{
+      position:absolute;inset:0;
+      background-image:radial-gradient(rgba(44,122,90,.08) 1px, transparent 1px);
+      background-size:32px 32px;
+      pointer-events:none;z-index:0;
+    }
+    .section-bg-gradient{
+      position:absolute;inset:0;
+      background:radial-gradient(800px 400px at 80% 20%, rgba(44,122,90,.06), transparent 60%);
+      pointer-events:none;z-index:0;
+    }
+
+    /* ── DARK SECTION TYPE TABLE ── */
+    .ds-section-dark .ds-type-table tr{border-bottom-color:rgba(255,255,255,.08)}
+    .ds-section-dark .ds-type-table .ds-type-name{color:rgba(255,255,255,.5)}
+    .ds-section-dark .ds-type-table .ds-type-spec{color:rgba(255,255,255,.4)}
+
+    /* ── ICON SHOWCASE ── */
+    .icon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px}
+    .icon-item{
+      display:flex;flex-direction:column;align-items:center;gap:10px;
+      padding:20px 12px;border-radius:18px;background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);transition:all .3s;
+    }
+    .icon-item:hover{background:rgba(44,122,90,.1);border-color:var(--brand);transform:translateY(-4px)}
+    .icon-item svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+    .icon-item span{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
+
+    @media(max-width:640px){
+      .ds-nav{gap:4px;padding:8px 12px}
+      .ds-nav a{padding:0 12px;font-size:.76rem;min-height:34px}
+      .ds-type-table .ds-type-name{width:100px;font-size:.72rem}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════ DS NAV ═══════ -->
+  <nav class="ds-nav" aria-label="Design system navigation">
+    <a href="#ds-hero">Hero</a>
+    <a href="#ds-typography">Tipografia</a>
+    <a href="#ds-colors">Cores</a>
+    <a href="#ds-components">Componentes</a>
+    <a href="#ds-icons">Ícones</a>
+    <a href="#ds-motion">Animações</a>
+  </nav>
+
+  <!-- ═══════ 0 · HERO ═══════ -->
+  <section class="hero" id="ds-hero" style="position:relative;min-height:100vh;display:flex;align-items:center">
+    <div class="hero-particles">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+    <div class="container hero-grid" style="position:relative;z-index:2">
+      <div class="hero-copy">
+        <div class="anim-in d1 eyebrow" style="color:#80d1a8">Design System 2.0</div>
+        <h1 class="anim-in d2" style="animation:textReveal 1.2s cubic-bezier(.16,1,.3,1) .3s both">Componentes, animações e padrões visuais do projeto.</h1>
+        <p class="support anim-in d3">
+          Biblioteca de padrões vivos combinando glassmorphism, animações Gemini e a identidade visual do Alta Precisão. Cada elemento é interativo.
+        </p>
+        <div class="hero-actions anim-in d4">
+          <a class="button btn-shimmer glow-pulse" href="#ds-components" style="position:relative;overflow:hidden">
+            <span style="position:relative;z-index:1">Ver componentes</span>
+          </a>
+          <a class="button outline" href="#ds-typography" style="transition:all .3s">Ver tipografia</a>
+        </div>
+        <div class="hero-points anim-in d5">
+          <div class="hero-point glass-panel flashlight-card" onmousemove="this.style.setProperty('--mx',event.offsetX+'px');this.style.setProperty('--my',event.offsetY+'px')">
+            <strong>Glass + Motion</strong><span>Efeitos premium combinados</span>
+          </div>
+          <div class="hero-point glass-panel flashlight-card" onmousemove="this.style.setProperty('--mx',event.offsetX+'px');this.style.setProperty('--my',event.offsetY+'px')">
+            <strong>Flashlight Cards</strong><span>Mouse-tracking reveal</span>
+          </div>
+          <div class="hero-point glass-panel flashlight-card" onmousemove="this.style.setProperty('--mx',event.offsetX+'px');this.style.setProperty('--my',event.offsetY+'px')">
+            <strong>Shimmer Buttons</strong><span>Beam animation no hover</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual anim-in d3" style="position:relative">
+        <div class="hero-slider" aria-label="Galeria hero">
+          <div class="hero-track">
+            <figure class="hero-card"><img src="images/hero-slide-01.webp" alt="Hero 1" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-02.webp" alt="Hero 2" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-03.webp" alt="Hero 3" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-04.webp" alt="Hero 4" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-05.webp" alt="Hero 5" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-06.webp" alt="Hero 6" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-07.webp" alt="Hero 7" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-08.webp" alt="Hero 8" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-01.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-02.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-03.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-04.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-05.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-06.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-07.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-08.webp" alt="" aria-hidden="true" /></figure>
+          </div>
+          <div class="hero-track">
+            <figure class="hero-card"><img src="images/hero-slide-08.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-07.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-06.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-05.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-04.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-03.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-02.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-01.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-08.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-07.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-06.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-05.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-04.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-03.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-02.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="images/hero-slide-01.webp" alt="" aria-hidden="true" /></figure>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Glass stat bar at bottom of hero -->
+    <div style="position:absolute;bottom:0;left:0;right:0;z-index:3">
+      <div class="container">
+        <div class="glass-panel anim-in d6" style="display:flex;justify-content:space-around;padding:20px 32px;margin-bottom:-30px;border-radius:20px;gap:16px;flex-wrap:wrap">
+          <div style="text-align:center"><strong style="font-size:1.6rem;color:#80d1a8">12+</strong><br><span style="font-size:.78rem;opacity:.7;text-transform:uppercase;letter-spacing:.08em">Componentes</span></div>
+          <div class="glass-divider" style="width:1px;height:auto;background:linear-gradient(180deg,transparent,rgba(255,255,255,.3),transparent)"></div>
+          <div style="text-align:center"><strong style="font-size:1.6rem;color:#80d1a8">8+</strong><br><span style="font-size:.78rem;opacity:.7;text-transform:uppercase;letter-spacing:.08em">Animações</span></div>
+          <div class="glass-divider" style="width:1px;height:auto;background:linear-gradient(180deg,transparent,rgba(255,255,255,.3),transparent)"></div>
+          <div style="text-align:center"><strong style="font-size:1.6rem;color:#80d1a8">11</strong><br><span style="font-size:.78rem;opacity:.7;text-transform:uppercase;letter-spacing:.08em">Cores</span></div>
+          <div class="glass-divider" style="width:1px;height:auto;background:linear-gradient(180deg,transparent,rgba(255,255,255,.3),transparent)"></div>
+          <div style="text-align:center"><strong style="font-size:1.6rem;color:#80d1a8">100%</strong><br><span style="font-size:.78rem;opacity:.7;text-transform:uppercase;letter-spacing:.08em">Local Assets</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════ 1 · TYPOGRAPHY ═══════ -->
+  <section class="ds-section ds-section-light" id="ds-typography" style="padding-top:110px;position:relative">
+    <div class="section-bg-dots"></div>
+    <div class="section-bg-gradient"></div>
+    <div class="container" style="position:relative;z-index:1">
+      <div class="ds-label anim-in">Typography</div>
+      <h2 class="ds-title anim-in d1">Escala tipográfica completa</h2>
+      <p class="ds-desc anim-in d2">Inter como font primária, com fallback stack Segoe UI → Arial → sans-serif. Carregada via sistema local. Pesos: 400, 600, 700, 800.</p>
+
+      <table class="ds-type-table">
+        <tbody>
+          <tr class="anim-in d1"><td class="ds-type-name">H1</td><td><h1 style="font-size:clamp(2.5rem,5vw,4.8rem);line-height:.98;letter-spacing:-.04em">Levantamentos e georreferenciamento</h1></td><td class="ds-type-spec">Inter / 800<br>clamp(2.5rem,5vw,4.8rem)<br>lh: 0.98 · ls: -0.04em</td></tr>
+          <tr class="anim-in d2"><td class="ds-type-name">H2</td><td><h2>Soluções técnicas para topografia</h2></td><td class="ds-type-spec">Inter / 800<br>clamp(2rem,3.6vw,3.2rem)<br>lh: 1.02 · ls: -0.03em</td></tr>
+          <tr class="anim-in d3"><td class="ds-type-name">H3</td><td><h3>Diagnóstico e execução técnica</h3></td><td class="ds-type-spec">Inter / 700<br>1.2rem · lh: 1.2</td></tr>
+          <tr class="anim-in d1"><td class="ds-type-name">Eyebrow</td><td><div class="eyebrow">Topografia profissional</div></td><td class="ds-type-spec">13px / 700<br>ls: 0.14em · uppercase</td></tr>
+          <tr class="anim-in d2"><td class="ds-type-name">Body (support)</td><td><p class="support" style="color:var(--text-soft)">Estrutura com imagens originais organizadas para uso profissional.</p></td><td class="ds-type-spec">1.08rem / 400<br>color: --text-soft</td></tr>
+          <tr class="anim-in d3"><td class="ds-type-name">Body (text)</td><td><p class="text">Entendimento do problema antes da ida a campo.</p></td><td class="ds-type-spec">1rem / 400<br>color: --text-soft</td></tr>
+          <tr class="anim-in d1"><td class="ds-type-name">Body SM</td><td><span style="font-size:.92rem;color:var(--text-soft)">Proprietário rural · Atuação diversas</span></td><td class="ds-type-spec">0.92rem / 400</td></tr>
+          <tr class="anim-in d2"><td class="ds-type-name">Badge</td><td><span class="service-badge">Levantamento topográfico</span></td><td class="ds-type-spec">0.82rem / 700</td></tr>
+          <tr class="anim-in d3"><td class="ds-type-name">Caption</td><td><span style="font-size:.78rem;font-weight:600;color:var(--text-soft);letter-spacing:.06em;text-transform:uppercase">CAPTION LABEL</span></td><td class="ds-type-spec">0.78rem / 600<br>uppercase · ls: 0.06em</td></tr>
+          <tr class="anim-in d1"><td class="ds-type-name">Logo</td><td><span style="font-size:1rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase">Alta <span style="color:#80d1a8">Precisão</span></span></td><td class="ds-type-spec">1rem / 800<br>ls: 0.08em · uppercase</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ═══════ 2 · COLORS & SURFACES ═══════ -->
+  <section class="ds-section ds-section-dark" id="ds-colors" style="position:relative">
+    <div class="hero-particles" style="opacity:.3"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
+    <div class="container" style="position:relative;z-index:1">
+      <div class="ds-label anim-in" style="color:#80d1a8">Colors &amp; Surfaces</div>
+      <h2 class="ds-title anim-in d1" style="color:#fff">Paleta semântica e superfícies</h2>
+
+      <h3 class="ds-subtitle anim-in d2" style="color:#fff">Paleta principal</h3>
+      <div class="ds-color-grid">
+        <div class="ds-swatch anim-in d1"><div class="ds-swatch-fill" style="background:var(--bg)"><span>#0c1117</span></div><div class="ds-swatch-info"><strong>--bg</strong><code>Background · HSL(212,30%,7%) · Neutral</code></div></div>
+        <div class="ds-swatch anim-in d2"><div class="ds-swatch-fill" style="background:var(--bg-soft)"><span>#121a22</span></div><div class="ds-swatch-info"><strong>--bg-soft</strong><code>Background alt · HSL(212,28%,10%)</code></div></div>
+        <div class="ds-swatch anim-in d3"><div class="ds-swatch-fill" style="background:#fff"><span>#ffffff</span></div><div class="ds-swatch-info"><strong>--surface</strong><code>Cards, painéis · Neutral</code></div></div>
+        <div class="ds-swatch anim-in d4"><div class="ds-swatch-fill" style="background:var(--surface-2)"><span>#f3f6f8</span></div><div class="ds-swatch-info"><strong>--surface-2</strong><code>Seções alternadas</code></div></div>
+        <div class="ds-swatch anim-in d1"><div class="ds-swatch-fill" style="background:var(--text)"><span>#1b2430</span></div><div class="ds-swatch-info"><strong>--text</strong><code>Texto principal · AAA</code></div></div>
+        <div class="ds-swatch anim-in d2"><div class="ds-swatch-fill" style="background:var(--text-soft)"><span>#5b6878</span></div><div class="ds-swatch-info"><strong>--text-soft</strong><code>Texto secundário · AA</code></div></div>
+        <div class="ds-swatch anim-in d3"><div class="ds-swatch-fill" style="background:var(--brand)"><span>#2c7a5a</span></div><div class="ds-swatch-info"><strong>--brand</strong><code>Primary · HSL(155,47%,33%) · AA</code></div></div>
+        <div class="ds-swatch anim-in d4"><div class="ds-swatch-fill" style="background:var(--brand-2)"><span>#1e5a43</span></div><div class="ds-swatch-info"><strong>--brand-2</strong><code>Primary hover · darker</code></div></div>
+        <div class="ds-swatch anim-in d1"><div class="ds-swatch-fill" style="background:#80d1a8"><span>#80d1a8</span></div><div class="ds-swatch-info"><strong>Logo accent</strong><code>Decorative · HSL(152,46%,66%)</code></div></div>
+        <div class="ds-swatch anim-in d2"><div class="ds-swatch-fill" style="background:#edf7f1"><span>#edf7f1</span></div><div class="ds-swatch-info"><strong>Badge bg</strong><code>Feedback · light green tint</code></div></div>
+        <div class="ds-swatch anim-in d3"><div class="ds-swatch-fill" style="background:var(--line)"><span>#dfe6ec</span></div><div class="ds-swatch-info"><strong>--line</strong><code>Borders · Neutral</code></div></div>
+      </div>
+
+      <h3 class="ds-subtitle anim-in" style="margin-top:48px;color:#fff">Superfícies e gradientes</h3>
+      <div class="ds-surface-grid">
+        <div class="ds-surface-card anim-in d1" style="background:radial-gradient(1000px 500px at 50% -10%,rgba(87,166,121,.22),transparent 60%),linear-gradient(180deg,#0d141b,#101a23);color:#fff"><strong>Hero background</strong><code>radial + linear gradient</code></div>
+        <div class="ds-surface-card glass-panel anim-in d2" style="color:#fff"><strong>Glass Panel</strong><code>backdrop-filter blur(20px)</code></div>
+        <div class="ds-surface-card anim-in d3" style="background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.1);color:#fff"><strong>Hero visual frame</strong><code>gradient border glass</code></div>
+        <div class="ds-surface-card anim-in d4" style="background:#fff;border:1px solid var(--line);box-shadow:0 14px 40px rgba(12,18,28,.08);color:var(--text)"><strong>Card surface</strong><code>white + line + shadow</code></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════ 3 · UI COMPONENTS ═══════ -->
+  <section class="ds-section ds-section-light" id="ds-components" style="position:relative">
+    <div class="section-bg-dots"></div>
+    <div class="container" style="position:relative;z-index:1">
+      <div class="ds-label anim-in">UI Components</div>
+      <h2 class="ds-title anim-in d1">Componentes interativos</h2>
+
+      <!-- Buttons -->
+      <h3 class="ds-subtitle anim-in d2">Buttons</h3>
+      <p class="ds-desc anim-in d3">Botão primário com shimmer beam + glow pulse. Outline com glass hover.</p>
+      <div class="ds-component-row anim-in d4">
+        <div class="ds-state-box"><span class="ds-state-label">Shimmer + Glow</span><a class="button btn-shimmer glow-pulse" href="#!"><span style="position:relative;z-index:1">Solicitar orçamento</span></a></div>
+        <div class="ds-state-box"><span class="ds-state-label">Default</span><a class="button" href="#!">Solicitar orçamento</a></div>
+        <div class="ds-state-box"><span class="ds-state-label">Hover sim.</span><a class="button" href="#!" style="transform:translateY(-2px);background:var(--brand-2)">Solicitar orçamento</a></div>
+      </div>
+      <div class="ds-component-row anim-in d5" style="background:#0d141b;padding:28px;border-radius:22px">
+        <div class="ds-state-box"><span class="ds-state-label" style="color:#d0d9df">Outline</span><a class="button outline" href="#!">Ver serviços</a></div>
+        <div class="ds-state-box"><span class="ds-state-label" style="color:#d0d9df">Outline hover</span><a class="button outline" href="#!" style="background:rgba(255,255,255,.08)">Ver serviços</a></div>
+      </div>
+
+      <!-- Cards -->
+      <h3 class="ds-subtitle anim-in" style="margin-top:48px">Service Card + Flashlight</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px" class="anim-in d2">
+        <article class="service-card flashlight-card" onmousemove="this.style.setProperty('--mx',event.offsetX+'px');this.style.setProperty('--my',event.offsetY+'px')">
+          <div class="service-media"><img src="images/service-area-01.webp" alt="Levantamento" /></div>
+          <div class="service-body"><span class="service-badge">Levantamento topográfico</span><h3>Leitura precisa da área para obras e estudos</h3><p>Ideal para processos de regularização com segurança.</p></div>
+        </article>
+        <article class="service-card flashlight-card" onmousemove="this.style.setProperty('--mx',event.offsetX+'px');this.style.setProperty('--my',event.offsetY+'px')">
+          <div class="service-media"><img src="images/service-area-02.webp" alt="Georreferenciamento" /></div>
+          <div class="service-body"><span class="service-badge">Georreferenciamento</span><h3>Base técnica para imóveis rurais</h3><p>Compatibilização e apoio ao processo documental.</p></div>
+        </article>
+      </div>
+
+      <!-- Process Cards -->
+      <h3 class="ds-subtitle anim-in" style="margin-top:48px">Process Cards</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px">
+        <article class="process-card anim-in d1"><div class="process-step">1</div><h3>Contato</h3><p>Receba a demanda do cliente.</p></article>
+        <article class="process-card anim-in d2"><div class="process-step">2</div><h3>Análise</h3><p>Documentos e viabilidade.</p></article>
+        <article class="process-card anim-in d3"><div class="process-step">3</div><h3>Campo</h3><p>Etapa técnica em campo.</p></article>
+      </div>
+
+      <!-- Testimonial -->
+      <h3 class="ds-subtitle anim-in" style="margin-top:48px">Testimonial Card</h3>
+      <div style="max-width:400px" class="anim-in d2">
+        <article class="testimonial">
+          <div class="testimonial-top"><img src="images/client-01.webp" alt="Cliente" /><div><div class="person">Cliente 01</div><div class="role">Proprietário rural</div></div></div>
+          <p class="quote">"O site passou mais autoridade e ficou muito mais profissional."</p>
+        </article>
+      </div>
+
+      <!-- Badges, Eyebrows, Hero Points -->
+      <h3 class="ds-subtitle anim-in" style="margin-top:48px">Badges &amp; Eyebrows</h3>
+      <div class="ds-component-row anim-in d1">
+        <span class="service-badge">Levantamento</span>
+        <span class="service-badge">Georreferenciamento</span>
+        <span class="service-badge">Regularização</span>
+      </div>
+      <div class="anim-in d2">
+        <div class="eyebrow">Serviços</div>
+        <div class="eyebrow">Sobre o atendimento</div>
+        <div class="eyebrow">Processo</div>
+      </div>
+
+      <!-- Glass Navbar Demo -->
+      <h3 class="ds-subtitle anim-in" style="margin-top:48px">Navbar (Glass)</h3>
+      <div class="anim-in d3" style="border-radius:22px;overflow:hidden">
+        <header class="site-header" style="position:relative;border-radius:22px">
+          <div class="container header-inner">
+            <a class="logo" href="#!">Alta <span>Precisão</span></a>
+            <nav class="nav" style="display:flex"><a href="#!">Serviços</a><a href="#!">Sobre</a><a href="#!">Processo</a></nav>
+            <a class="button btn-shimmer" href="#!" style="flex:0 0 auto"><span style="position:relative;z-index:1">Orçamento</span></a>
+          </div>
+        </header>
+      </div>
+
+      <!-- Modal / Tooltip Demo -->
+      <h3 class="ds-subtitle anim-in" style="margin-top:48px">Modal &amp; Tooltip</h3>
+      <div class="ds-component-row anim-in d2">
+        <div class="glass-panel" style="padding:24px 32px;max-width:400px;position:relative">
+          <div class="eyebrow" style="color:#80d1a8">Modal Glass</div>
+          <h3 style="color:#fff;margin-bottom:8px">Confirmar ação</h3>
+          <p style="color:rgba(255,255,255,.7);font-size:.92rem;margin-bottom:16px">Deseja realmente prosseguir com esta operação?</p>
+          <div style="display:flex;gap:10px"><a class="button btn-shimmer" href="#!" style="min-height:44px;font-size:.88rem"><span style="position:relative;z-index:1">Confirmar</span></a><a class="button outline" href="#!" style="min-height:44px;font-size:.88rem">Cancelar</a></div>
+        </div>
+        <div style="position:relative;display:inline-block">
+          <a class="button" href="#!" style="min-height:44px;font-size:.88rem">Hover para tooltip</a>
+          <div style="position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);background:#1b2430;color:#fff;padding:8px 14px;border-radius:10px;font-size:.78rem;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.2)">Tooltip com shadow premium<div style="position:absolute;bottom:-4px;left:50%;transform:translateX(-50%) rotate(45deg);width:8px;height:8px;background:#1b2430"></div></div>
+        </div>
+      </div>
+
+      <!-- CTA Box -->
+      <h3 class="ds-subtitle anim-in" style="margin-top:48px">CTA Box</h3>
+      <div class="cta-box anim-in d3" style="max-width:100%">
+        <img src="images/contact-banner.webp" alt="CTA background" />
+        <div class="cta-overlay">
+          <div class="cta-copy">
+            <div class="eyebrow" style="color:#80d1a8">Contato</div>
+            <h2>Pronto para transformar o projeto?</h2>
+            <p>Todos os componentes visuais do design system em ação.</p>
+            <div class="hero-actions"><a class="button btn-shimmer glow-pulse" href="#!"><span style="position:relative;z-index:1">Solicitar orçamento</span></a><a class="button outline" href="#!">Voltar ao topo</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════ 4 · ICONS ═══════ -->
+  <section class="ds-section ds-section-dark" id="ds-icons" style="position:relative">
+    <div class="hero-particles" style="opacity:.2"><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+    <div class="container" style="position:relative;z-index:1">
+      <div class="ds-label anim-in" style="color:#80d1a8">Ícones</div>
+      <h2 class="ds-title anim-in d1" style="color:#fff">Ícones SVG inline</h2>
+      <p class="ds-desc anim-in d2" style="color:rgba(255,255,255,.6)">Sistema de ícones SVG usados nos componentes do projeto. Stroke-based, 24px, 1.5px stroke.</p>
+      <div class="icon-grid anim-in d3">
+        <div class="icon-item"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span>Phone</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Location</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Mail</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Search</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Shield</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Activity</span></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg><span>Layout</span></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════ 5 · MOTION & ANIMATION ═══════ -->
+  <section class="ds-section ds-section-soft" id="ds-motion" style="position:relative">
+    <div class="section-bg-gradient"></div>
+    <div class="container" style="position:relative;z-index:1">
+      <div class="ds-label anim-in">Motion &amp; Interaction</div>
+      <h2 class="ds-title anim-in d1">Animações e interações</h2>
+      <p class="ds-desc anim-in d2">Combinação de reveal-on-scroll, Gemini animationIn, shimmer beam, flashlight reveal, glow pulse e marquee.</p>
+
+      <div class="ds-motion-grid">
+        <div class="ds-motion-item anim-in d1">
+          <h3>Reveal on Scroll</h3><p>Fade + lift + blur. IntersectionObserver com threshold 0.12.</p>
+          <div class="anim-in" style="padding:20px;background:var(--surface-2);border-radius:14px"><div class="eyebrow">Elemento revelado</div><h3>Conteúdo que aparece</h3></div>
+          <code>.anim-in → .anim-in.is-visible | opacity + transform + blur</code>
+        </div>
+        <div class="ds-motion-item anim-in d2">
+          <h3>Shimmer Beam</h3><p>Gradient skew que percorre o botão no hover.</p>
+          <a class="button btn-shimmer" href="#!" style="pointer-events:auto"><span style="position:relative;z-index:1">Passe o mouse aqui</span></a>
+          <code>.btn-shimmer::after | shimmer 1.2s ease</code>
+        </div>
+        <div class="ds-motion-item anim-in d3">
+          <h3>Glow Pulse</h3><p>Box-shadow pulsante com cor da marca.</p>
+          <div class="glow-pulse" style="width:80px;height:80px;border-radius:50%;background:var(--brand);margin:0 auto"></div>
+          <code>pulseGlow 3s ease-in-out infinite</code>
+        </div>
+        <div class="ds-motion-item anim-in d1">
+          <h3>Flashlight Reveal</h3><p>Radial-gradient segue o cursor do mouse.</p>
+          <div class="flashlight-card" onmousemove="this.style.setProperty('--mx',event.offsetX+'px');this.style.setProperty('--my',event.offsetY+'px')" style="height:100px;background:rgba(44,122,90,.08);border:1px solid var(--line);border-radius:14px;display:grid;place-items:center;font-weight:600;color:var(--text-soft)">Mova o mouse</div>
+          <code>radial-gradient(600px at --mx --my)</code>
+        </div>
+        <div class="ds-motion-item anim-in d2">
+          <h3>Marquee Infinito</h3><p>Track 1: 38s. Track 2: 46s reverso.</p>
+          <div style="overflow:hidden;border-radius:14px;height:60px"><div style="display:flex;gap:10px;width:max-content;animation:marquee 10s linear infinite">
+            <div style="width:80px;height:50px;border-radius:10px;background:var(--brand);opacity:.7;flex:0 0 auto"></div>
+            <div style="width:80px;height:50px;border-radius:10px;background:var(--brand-2);opacity:.7;flex:0 0 auto"></div>
+            <div style="width:80px;height:50px;border-radius:10px;background:#80d1a8;opacity:.7;flex:0 0 auto"></div>
+            <div style="width:80px;height:50px;border-radius:10px;background:var(--brand);opacity:.7;flex:0 0 auto"></div>
+            <div style="width:80px;height:50px;border-radius:10px;background:var(--brand-2);opacity:.7;flex:0 0 auto"></div>
+            <div style="width:80px;height:50px;border-radius:10px;background:#80d1a8;opacity:.7;flex:0 0 auto"></div>
+            <div style="width:80px;height:50px;border-radius:10px;background:var(--brand);opacity:.7;flex:0 0 auto"></div>
+          </div></div>
+          <code>@keyframes marquee { 0% → -50% }</code>
+        </div>
+        <div class="ds-motion-item anim-in d3">
+          <h3>Float / Orbit</h3><p>Elementos decorativos com animação flutuante.</p>
+          <div style="height:80px;position:relative;display:flex;align-items:center;justify-content:center">
+            <div style="width:40px;height:40px;border-radius:50%;background:var(--brand);animation:floatUp 4s ease-in-out infinite"></div>
+            <div style="width:20px;height:20px;border-radius:50%;background:#80d1a8;position:absolute;animation:floatUp 3s ease-in-out infinite .5s"></div>
+          </div>
+          <code>floatUp 4s ease-in-out infinite</code>
+        </div>
+        <div class="ds-motion-item anim-in d1">
+          <h3>Card Hover Lift</h3><p>Cards elevam -4px com sombra ampliada.</p>
+          <article class="service-card" style="max-width:240px;margin:0 auto"><div class="service-media" style="height:100px"><img src="images/service-area-03.webp" alt="Demo" /></div><div class="service-body" style="padding:14px"><span class="service-badge">Hover me</span><h3>Passe o mouse</h3></div></article>
+          <code>translateY(-4px) + shadow grow</code>
+        </div>
+        <div class="ds-motion-item anim-in d2">
+          <h3>Glassmorphism</h3><p>Backdrop-filter blur + transparência.</p>
+          <div style="background:linear-gradient(135deg,var(--brand),#80d1a8);padding:20px;border-radius:14px">
+            <div class="glass-panel" style="padding:16px;text-align:left"><strong style="color:#fff">Glass card</strong><p style="color:rgba(255,255,255,.8);font-size:.85rem;margin-top:4px">Blur + saturate + border</p></div>
+          </div>
+          <code>backdrop-filter: saturate(160%) blur(20px)</code>
+        </div>
+        <div class="ds-motion-item anim-in d3">
+          <h3>Reduced Motion</h3><p>Respeita <code>prefers-reduced-motion</code>.</p>
+          <div style="padding:14px;background:var(--surface-2);border-radius:14px;font-size:.85rem;color:var(--text-soft)">
+            Quando ativo: <code>transition:none</code>, <code>animation:none</code>
+          </div>
+          <code>@media (prefers-reduced-motion)</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════ FOOTER ═══════ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="logo">Alta <span>Precisão</span></div>
+      <nav class="footer-nav" aria-label="Rodapé">
+        <a href="#ds-hero">Hero</a>
+        <a href="#ds-typography">Tipografia</a>
+        <a href="#ds-colors">Cores</a>
+        <a href="#ds-components">Componentes</a>
+        <a href="#ds-icons">Ícones</a>
+        <a href="#ds-motion">Animações</a>
+      </nav>
+      <div>Design System 2.0 — Glass + Motion + Alta Precisão</div>
+    </div>
+  </footer>
+
+  <script src="js/site.js"></script>
+  <script>
+    // Enhanced scroll animation observer (Gemini-style + original reveal)
+    document.addEventListener('DOMContentLoaded', () => {
+      const animEls = document.querySelectorAll('.anim-in');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      animEls.forEach(el => observer.observe(el));
+
+      // Flashlight cards interactive
+      document.querySelectorAll('.flashlight-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+          card.style.setProperty('--my', `${e.clientY - rect.top}px`);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

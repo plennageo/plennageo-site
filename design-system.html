@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design System — Alta Precisão</title>
+  <meta name="description" content="Living design system and pattern library for the Alta Precisão topografia website." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    /* ── Design-system-only layout helpers (non-invasive) ── */
+    .ds-nav{
+      position:sticky;top:0;z-index:50;
+      display:flex;align-items:center;gap:6px;
+      padding:10px 16px;overflow-x:auto;white-space:nowrap;
+      background:rgba(12,17,23,.92);backdrop-filter:saturate(160%) blur(12px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .ds-nav a{
+      display:inline-flex;align-items:center;min-height:38px;padding:0 16px;
+      border-radius:999px;font-size:.82rem;font-weight:700;color:#d0d9df;
+      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+      transition:background .2s,color .2s;flex:0 0 auto;
+    }
+    .ds-nav a:hover{background:var(--brand);color:#fff}
+
+    .ds-section{padding:80px 0;border-top:1px solid var(--line)}
+    .ds-section:first-of-type{border-top:none}
+    .ds-section-dark{background:#0d141b;color:#fff;border-top-color:rgba(255,255,255,.08)}
+    .ds-section-soft{background:var(--surface-2)}
+    .ds-section-light{background:#fff}
+
+    .ds-label{
+      display:inline-flex;align-items:center;gap:10px;
+      font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--brand);margin-bottom:14px;
+    }
+    .ds-label::before{
+      content:"";width:36px;height:2px;background:var(--brand);display:block;flex:0 0 auto;
+    }
+    .ds-title{
+      font-size:clamp(2rem,3.6vw,3.2rem);line-height:1.02;letter-spacing:-.03em;
+      margin-bottom:40px;
+    }
+    .ds-subtitle{
+      font-size:1.2rem;line-height:1.2;margin-bottom:20px;
+    }
+    .ds-desc{font-size:1rem;color:var(--text-soft);max-width:660px;margin-bottom:40px}
+
+    /* Typography table */
+    .ds-type-table{width:100%;border-collapse:collapse}
+    .ds-type-table tr{border-bottom:1px solid var(--line)}
+    .ds-type-table td{padding:22px 0;vertical-align:middle}
+    .ds-type-table .ds-type-name{
+      width:180px;font-size:.82rem;font-weight:700;letter-spacing:.08em;
+      text-transform:uppercase;color:var(--text-soft);
+    }
+    .ds-type-table .ds-type-preview{flex:1}
+    .ds-type-table .ds-type-spec{
+      width:140px;text-align:right;font-size:.82rem;
+      font-weight:600;color:var(--text-soft);white-space:nowrap;
+    }
+
+    /* Color swatches */
+    .ds-color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px}
+    .ds-swatch{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#fff}
+    .ds-swatch-fill{height:100px;display:flex;align-items:flex-end;padding:10px 14px}
+    .ds-swatch-fill span{
+      font-size:.72rem;font-weight:700;letter-spacing:.06em;
+      padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.85);color:var(--text);
+    }
+    .ds-swatch-info{padding:14px 16px}
+    .ds-swatch-info strong{display:block;font-size:.88rem}
+    .ds-swatch-info code{font-size:.78rem;color:var(--text-soft)}
+
+    /* Surface cards */
+    .ds-surface-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;margin-top:28px}
+    .ds-surface-card{
+      border-radius:22px;padding:28px;min-height:140px;
+      display:flex;flex-direction:column;justify-content:flex-end;
+    }
+    .ds-surface-card strong{display:block;font-size:.92rem;margin-bottom:4px}
+    .ds-surface-card code{font-size:.78rem;opacity:.7}
+
+    /* Component showcase */
+    .ds-component-row{
+      display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-bottom:28px;
+    }
+    .ds-state-label{
+      display:block;font-size:.72rem;font-weight:700;letter-spacing:.1em;
+      text-transform:uppercase;color:var(--text-soft);margin-bottom:8px;text-align:center;
+    }
+    .ds-state-box{
+      display:flex;flex-direction:column;align-items:center;gap:6px;
+    }
+
+    /* Motion gallery */
+    .ds-motion-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px}
+    .ds-motion-item{
+      border-radius:22px;padding:28px;background:#fff;border:1px solid var(--line);
+      box-shadow:0 10px 30px rgba(12,18,28,.06);text-align:center;
+    }
+    .ds-motion-item h3{margin-bottom:8px}
+    .ds-motion-item p{color:var(--text-soft);font-size:.92rem;margin-bottom:18px}
+    .ds-motion-item code{
+      display:inline-block;padding:6px 14px;border-radius:12px;
+      background:var(--surface-2);font-size:.78rem;color:var(--text-soft);margin-top:14px;
+    }
+
+    /* Layout showcase */
+    .ds-layout-demo{
+      background:var(--surface-2);border:1px dashed var(--line);border-radius:18px;
+      padding:24px;margin-bottom:28px;overflow:hidden;
+    }
+    .ds-layout-demo .placeholder{
+      background:rgba(44,122,90,.08);border:2px dashed rgba(44,122,90,.22);
+      border-radius:14px;padding:20px;text-align:center;
+      font-size:.82rem;font-weight:600;color:var(--brand);
+    }
+    .ds-layout-demo .placeholder-tall{min-height:120px;display:grid;place-items:center}
+
+    @media(max-width:640px){
+      .ds-type-table .ds-type-name{width:100px;font-size:.72rem}
+      .ds-type-table .ds-type-spec{width:auto}
+      .ds-nav{gap:4px;padding:8px 12px}
+      .ds-nav a{padding:0 12px;font-size:.76rem;min-height:34px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════ DS TOP NAV ═══════ -->
+  <nav class="ds-nav" aria-label="Design system navigation">
+    <a href="#ds-hero">Hero</a>
+    <a href="#ds-typography">Typography</a>
+    <a href="#ds-colors">Colors</a>
+    <a href="#ds-components">Components</a>
+    <a href="#ds-layout">Layout</a>
+    <a href="#ds-motion">Motion</a>
+  </nav>
+
+
+  <!-- ═══════ 0 · HERO — EXACT CLONE, TEXT ADAPTED ═══════ -->
+  <section class="hero" id="ds-hero">
+    <div class="container hero-grid">
+      <div class="hero-copy reveal">
+        <div class="eyebrow">Design System</div>
+        <h1>Tipografia, componentes e padrões visuais do projeto Alta Precisão.</h1>
+        <p class="support">
+          Este documento é a biblioteca de padrões vivos do site. Contém todos os estilos, componentes, animações e tokens de design extraídos diretamente do código original em produção.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#ds-components">Ver componentes</a>
+          <a class="button outline" href="#ds-typography">Ver tipografia</a>
+        </div>
+        <div class="hero-points">
+          <div class="hero-point"><strong>Tokens visuais</strong><span>Cores, tipografia, raios</span></div>
+          <div class="hero-point"><strong>Componentes UI</strong><span>Botões, cards, badges</span></div>
+          <div class="hero-point"><strong>Motion & Layout</strong><span>Animações e grids reais</span></div>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="hero-slider" aria-label="Galeria de imagens do hero">
+          <div class="hero-track">
+            <figure class="hero-card"><img src="assets/images/hero-slide-01.webp" alt="Imagem de destaque do hero 1" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-02.webp" alt="Imagem de destaque do hero 2" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-03.webp" alt="Imagem de destaque do hero 3" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="Imagem de destaque do hero 4" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-05.webp" alt="Imagem de destaque do hero 5" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-06.webp" alt="Imagem de destaque do hero 6" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="Imagem de destaque do hero 7" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="Imagem de destaque do hero 8" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-01.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-02.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-03.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-05.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-06.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="" aria-hidden="true" /></figure>
+          </div>
+          <div class="hero-track">
+            <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-06.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-05.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-03.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-02.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-01.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-06.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-05.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-03.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-02.webp" alt="" aria-hidden="true" /></figure>
+            <figure class="hero-card"><img src="assets/images/hero-slide-01.webp" alt="" aria-hidden="true" /></figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════ 1 · TYPOGRAPHY ═══════ -->
+  <section class="ds-section ds-section-light" id="ds-typography">
+    <div class="container">
+      <div class="ds-label">Typography</div>
+      <h2 class="ds-title">Escala tipográfica do projeto</h2>
+      <p class="ds-desc">Cada linha abaixo usa o mesmo elemento HTML e classes CSS do site original. Nenhum estilo foi inventado ou normalizado.</p>
+
+      <table class="ds-type-table">
+        <tbody>
+          <!-- Heading 1 -->
+          <tr>
+            <td class="ds-type-name">Heading 1</td>
+            <td class="ds-type-preview"><h1>Levantamentos e georreferenciamento</h1></td>
+            <td class="ds-type-spec">clamp(2.5rem, 5vw, 4.8rem) / 0.98</td>
+          </tr>
+          <!-- Heading 2 -->
+          <tr>
+            <td class="ds-type-name">Heading 2</td>
+            <td class="ds-type-preview"><h2>Soluções técnicas para topografia</h2></td>
+            <td class="ds-type-spec">clamp(2rem, 3.6vw, 3.2rem) / 1.02</td>
+          </tr>
+          <!-- Heading 3 -->
+          <tr>
+            <td class="ds-type-name">Heading 3</td>
+            <td class="ds-type-preview"><h3>Diagnóstico e execução técnica</h3></td>
+            <td class="ds-type-spec">1.2rem / 1.2</td>
+          </tr>
+          <!-- Eyebrow -->
+          <tr>
+            <td class="ds-type-name">Eyebrow</td>
+            <td class="ds-type-preview"><div class="eyebrow">Topografia profissional</div></td>
+            <td class="ds-type-spec">13px / 700 / 0.14em</td>
+          </tr>
+          <!-- Bold L — strong in hero-point -->
+          <tr>
+            <td class="ds-type-name">Bold L</td>
+            <td class="ds-type-preview"><strong style="font-size:1.35rem;display:block">Rural e urbano</strong></td>
+            <td class="ds-type-spec">1.35rem / bold</td>
+          </tr>
+          <!-- Bold M — strong in about-item -->
+          <tr>
+            <td class="ds-type-name">Bold M</td>
+            <td class="ds-type-preview"><strong style="font-size:1.8rem;color:var(--brand);display:block">01</strong></td>
+            <td class="ds-type-spec">1.8rem / 800 / brand</td>
+          </tr>
+          <!-- Support / Lead text -->
+          <tr>
+            <td class="ds-type-name">Support</td>
+            <td class="ds-type-preview"><p class="support" style="color:var(--text-soft)">Estrutura de site com as imagens originais do template organizadas para uso profissional.</p></td>
+            <td class="ds-type-spec">1.08rem / regular</td>
+          </tr>
+          <!-- Regular M — p.text -->
+          <tr>
+            <td class="ds-type-name">Regular M (text)</td>
+            <td class="ds-type-preview"><p class="text">Entendimento do problema antes da ida a campo ou da proposta final.</p></td>
+            <td class="ds-type-spec">1rem / text-soft</td>
+          </tr>
+          <!-- Regular S — .role, .hero-point span -->
+          <tr>
+            <td class="ds-type-name">Regular S</td>
+            <td class="ds-type-preview"><span style="font-size:.92rem;color:var(--text-soft)">Proprietário rural · Atuação em áreas diversas</span></td>
+            <td class="ds-type-spec">0.92rem / regular</td>
+          </tr>
+          <!-- Badge text -->
+          <tr>
+            <td class="ds-type-name">Badge</td>
+            <td class="ds-type-preview"><span class="service-badge">Levantamento topográfico</span></td>
+            <td class="ds-type-spec">0.82rem / 700</td>
+          </tr>
+          <!-- Quote -->
+          <tr>
+            <td class="ds-type-name">Quote</td>
+            <td class="ds-type-preview"><p class="quote" style="font-size:1rem;color:var(--text)">"O site passou mais autoridade e a apresentação ficou profissional."</p></td>
+            <td class="ds-type-spec">1rem / text</td>
+          </tr>
+          <!-- Person name -->
+          <tr>
+            <td class="ds-type-name">Person</td>
+            <td class="ds-type-preview"><div class="person">Cliente 01</div></td>
+            <td class="ds-type-spec">inherit / 700</td>
+          </tr>
+          <!-- Nav link -->
+          <tr>
+            <td class="ds-type-name">Nav Link</td>
+            <td class="ds-type-preview"><span style="font-weight:600;font-size:.96rem;color:var(--text)">Serviços</span></td>
+            <td class="ds-type-spec">0.96rem / 600</td>
+          </tr>
+          <!-- Logo -->
+          <tr>
+            <td class="ds-type-name">Logo</td>
+            <td class="ds-type-preview"><span style="font-size:1rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text)">Alta <span style="color:#80d1a8">Precisão</span></span></td>
+            <td class="ds-type-spec">1rem / 800 / 0.08em</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ═══════ 2 · COLORS & SURFACES ═══════ -->
+  <section class="ds-section ds-section-soft" id="ds-colors">
+    <div class="container">
+      <div class="ds-label">Colors &amp; Surfaces</div>
+      <h2 class="ds-title">Paleta e superfícies do projeto</h2>
+
+      <!-- Core palette -->
+      <h3 class="ds-subtitle">Paleta principal</h3>
+      <div class="ds-color-grid">
+        <div class="ds-swatch">
+          <div class="ds-swatch-fill" style="background:var(--bg)"><span>#0c1117</span></div>
+          <div class="ds-swatch-info"><strong>--bg</strong><code>Background escuro</code></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-fill" style="background:var(--bg-soft)"><span>#121a22</span></div>
+          <div class="ds-swatch-info"><strong>--bg-soft</strong><code>Background alternativo</code></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-fill" style="background:var(--surface)"><span>#ffffff</span></div>
+          <div class="ds-swatch-info"><strong>--surface</strong><code>Cards, painéis</code></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-fill" style="background:var(--surface-2)"><span>#f3f6f8</span></div>
+          <div class="ds-swatch-info"><strong>--surface-2</strong><code>Seções alternadas</code></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-fill" style="background:var(--text)"><span>#1b2430</span></div>
+          <div class="ds-swatch-info"><strong>--text</strong><code>Texto principal</code></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-fill" style="background:var(--text-soft)"><span>#5b6878</span></div>
+          <div class="ds-swatch-info"><strong>--text-soft</strong><code>Texto secundário</code></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-fill" style="background:var(--brand)"><span>#2c7a5a</span></div>
+          <div class="ds-swatch-info"><strong>--brand</strong><code>Cor primária</code></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-fill" style="background:var(--brand-2)"><span>#1e5a43</span></div>
+          <div class="ds-swatch-info"><strong>--brand-2</strong><code>Hover / ênfase</code></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-fill" style="background:var(--line)"><span>#dfe6ec</span></div>
+          <div class="ds-swatch-info"><strong>--line</strong><code>Bordas e divisores</code></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-fill" style="background:#80d1a8"><span>#80d1a8</span></div>
+          <div class="ds-swatch-info"><strong>Logo accent</strong><code>Logo span color</code></div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-fill" style="background:#edf7f1"><span>#edf7f1</span></div>
+          <div class="ds-swatch-info"><strong>Badge bg</strong><code>Service-badge, process-step</code></div>
+        </div>
+      </div>
+
+      <!-- Surfaces -->
+      <h3 class="ds-subtitle" style="margin-top:48px">Superfícies e fundos</h3>
+      <div class="ds-surface-grid">
+        <div class="ds-surface-card" style="background:radial-gradient(1000px 500px at 50% -10%, rgba(87,166,121,.22), transparent 60%),linear-gradient(180deg,#0d141b 0%,#101a23 100%);color:#fff">
+          <strong>Hero background</strong>
+          <code>radial-gradient + linear-gradient</code>
+        </div>
+        <div class="ds-surface-card" style="background:rgba(12,17,23,.7);backdrop-filter:saturate(160%) blur(12px);color:#fff;border:1px solid rgba(255,255,255,.08)">
+          <strong>Header (glass)</strong>
+          <code>backdrop-filter blur(12px)</code>
+        </div>
+        <div class="ds-surface-card" style="background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.1);color:#fff">
+          <strong>Hero visual frame</strong>
+          <code>Gradient border glass</code>
+        </div>
+        <div class="ds-surface-card" style="background:#fff;border:1px solid var(--line);box-shadow:0 14px 40px rgba(12,18,28,.08)">
+          <strong>Card (service / process)</strong>
+          <code>White + line border + shadow</code>
+        </div>
+        <div class="ds-surface-card" style="background:var(--surface-2);border:1px solid var(--line)">
+          <strong>Section soft</strong>
+          <code>--surface-2 (#f3f6f8)</code>
+        </div>
+        <div class="ds-surface-card" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);color:#fff;min-height:100px">
+          <strong>Hero point</strong>
+          <code>rgba white 6% bg + 9% border</code>
+        </div>
+        <div class="ds-surface-card" style="background:#0d141b;color:#fff">
+          <strong>CTA section</strong>
+          <code>#0d141b solid</code>
+        </div>
+        <div class="ds-surface-card" style="background:#0b1015;color:#d4dce1;border-top:1px solid rgba(255,255,255,.06)">
+          <strong>Footer</strong>
+          <code>#0b1015 + top border</code>
+        </div>
+      </div>
+
+      <!-- Gradients -->
+      <h3 class="ds-subtitle" style="margin-top:48px">Gradientes</h3>
+      <div class="ds-surface-grid">
+        <div class="ds-surface-card" style="background:linear-gradient(180deg,transparent 45%, rgba(0,0,0,.45) 100%),url('assets/images/hero-slide-01.webp') center/cover;color:#fff;min-height:160px">
+          <strong>Hero card overlay</strong>
+          <code>Bottom dark vignette</code>
+        </div>
+        <div class="ds-surface-card" style="background:linear-gradient(180deg,transparent,rgba(0,0,0,.55)),url('assets/images/about-field.webp') center/cover;color:#fff;min-height:160px">
+          <strong>About media overlay</strong>
+          <code>Bottom 180px gradient</code>
+        </div>
+        <div class="ds-surface-card" style="background:linear-gradient(90deg, rgba(8,12,16,.86) 0%, rgba(8,12,16,.62) 42%, rgba(8,12,16,.16) 100%),url('assets/images/contact-banner.webp') center/cover;color:#fff;min-height:160px">
+          <strong>CTA overlay</strong>
+          <code>Horizontal gradient L→R</code>
+        </div>
+      </div>
+
+      <!-- Shadow -->
+      <h3 class="ds-subtitle" style="margin-top:48px">Sombras</h3>
+      <div class="ds-surface-grid">
+        <div class="ds-surface-card" style="background:#fff;box-shadow:var(--shadow);border-radius:var(--radius)">
+          <strong>--shadow</strong>
+          <code>0 20px 60px rgba(5,24,37,.12)</code>
+        </div>
+        <div class="ds-surface-card" style="background:#fff;box-shadow:0 14px 40px rgba(12,18,28,.08);border-radius:var(--radius)">
+          <strong>Card shadow</strong>
+          <code>0 14px 40px rgba(12,18,28,.08)</code>
+        </div>
+        <div class="ds-surface-card" style="background:#fff;box-shadow:0 22px 54px rgba(12,18,28,.14);border-radius:var(--radius)">
+          <strong>Card hover shadow</strong>
+          <code>0 22px 54px rgba(12,18,28,.14)</code>
+        </div>
+        <div class="ds-surface-card" style="background:#1a2530;box-shadow:0 24px 100px rgba(0,0,0,.34);border-radius:var(--radius);color:#fff">
+          <strong>Hero visual shadow</strong>
+          <code>0 24px 100px rgba(0,0,0,.34)</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════ 3 · UI COMPONENTS ═══════ -->
+  <section class="ds-section ds-section-light" id="ds-components">
+    <div class="container">
+      <div class="ds-label">UI Components</div>
+      <h2 class="ds-title">Componentes de interface</h2>
+
+      <!-- Buttons -->
+      <h3 class="ds-subtitle">Buttons</h3>
+      <p class="ds-desc">Botão primário (.button) e botão outline (.button.outline). Hover eleva -2px e escurece o fundo.</p>
+      <div class="ds-component-row">
+        <div class="ds-state-box">
+          <span class="ds-state-label">Default</span>
+          <a class="button" href="#!">Solicitar orçamento</a>
+        </div>
+        <div class="ds-state-box">
+          <span class="ds-state-label">Hover (simule)</span>
+          <a class="button" href="#!" style="transform:translateY(-2px);background:var(--brand-2)">Solicitar orçamento</a>
+        </div>
+      </div>
+
+      <div class="ds-component-row" style="background:#0d141b;padding:28px;border-radius:22px">
+        <div class="ds-state-box">
+          <span class="ds-state-label" style="color:#d0d9df">Outline default</span>
+          <a class="button outline" href="#!">Ver serviços</a>
+        </div>
+        <div class="ds-state-box">
+          <span class="ds-state-label" style="color:#d0d9df">Outline hover (simule)</span>
+          <a class="button outline" href="#!" style="background:rgba(255,255,255,.08)">Ver serviços</a>
+        </div>
+      </div>
+
+      <!-- Service Card -->
+      <h3 class="ds-subtitle" style="margin-top:48px">Service Card</h3>
+      <p class="ds-desc">Card com imagem, badge, título e descrição. Hover: translateY(-4px) + shadow + imagem scale(1.04).</p>
+      <div style="max-width:400px">
+        <article class="service-card">
+          <div class="service-media"><img src="assets/images/service-area-01.webp" alt="Levantamento topográfico" /></div>
+          <div class="service-body">
+            <span class="service-badge">Levantamento topográfico</span>
+            <h3>Leitura precisa da área para obras e estudos</h3>
+            <p>Ideal para quem precisa iniciar com segurança um processo de regularização.</p>
+          </div>
+        </article>
+      </div>
+
+      <!-- Process Card -->
+      <h3 class="ds-subtitle" style="margin-top:48px">Process Card</h3>
+      <p class="ds-desc">Card de etapa com step number circular, título e descrição.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px;max-width:700px">
+        <article class="process-card">
+          <div class="process-step">1</div>
+          <h3>Contato</h3>
+          <p>Receba a demanda e entenda o objetivo do cliente.</p>
+        </article>
+        <article class="process-card">
+          <div class="process-step">2</div>
+          <h3>Análise</h3>
+          <p>Veja documentos, localização e viabilidade.</p>
+        </article>
+        <article class="process-card">
+          <div class="process-step">3</div>
+          <h3>Campo</h3>
+          <p>Realize a etapa técnica com registro visual.</p>
+        </article>
+      </div>
+
+      <!-- Testimonial Card -->
+      <h3 class="ds-subtitle" style="margin-top:48px">Testimonial Card</h3>
+      <p class="ds-desc">Card de depoimento com avatar, nome, papel e citação.</p>
+      <div style="max-width:400px">
+        <article class="testimonial">
+          <div class="testimonial-top">
+            <img src="assets/images/client-01.webp" alt="Cliente" />
+            <div><div class="person">Cliente 01</div><div class="role">Proprietário rural</div></div>
+          </div>
+          <p class="quote">"O site passou mais autoridade e a apresentação dos serviços ficou muito mais profissional."</p>
+        </article>
+      </div>
+
+      <!-- Service Badge -->
+      <h3 class="ds-subtitle" style="margin-top:48px">Service Badge</h3>
+      <p class="ds-desc">Badge pequeno usado sobre títulos de serviço.</p>
+      <div class="ds-component-row">
+        <span class="service-badge">Levantamento topográfico</span>
+        <span class="service-badge">Georreferenciamento</span>
+        <span class="service-badge">Regularização</span>
+      </div>
+
+      <!-- Process Step -->
+      <h3 class="ds-subtitle" style="margin-top:48px">Process Step</h3>
+      <p class="ds-desc">Número circular usado nos cards de processo.</p>
+      <div class="ds-component-row">
+        <div class="process-step">1</div>
+        <div class="process-step">2</div>
+        <div class="process-step">3</div>
+        <div class="process-step">4</div>
+        <div class="process-step">5</div>
+      </div>
+
+      <!-- Eyebrow -->
+      <h3 class="ds-subtitle" style="margin-top:48px">Eyebrow</h3>
+      <p class="ds-desc">Rótulo superior com barra verde lateral. Usado em todas as seções.</p>
+      <div>
+        <div class="eyebrow">Serviços</div>
+        <div class="eyebrow">Sobre o atendimento</div>
+        <div class="eyebrow">Processo</div>
+        <div class="eyebrow">Prova social</div>
+        <div class="eyebrow">Contato</div>
+      </div>
+
+      <!-- Hero Point -->
+      <h3 class="ds-subtitle" style="margin-top:48px">Hero Point</h3>
+      <p class="ds-desc">Card compacto usado no hero para métricas/destaques.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;max-width:600px;background:#0d141b;padding:28px;border-radius:22px">
+        <div class="hero-point"><strong>Rural e urbano</strong><span>Atuação em áreas diversas</span></div>
+        <div class="hero-point"><strong>Campo + gabinete</strong><span>Execução e documentação</span></div>
+        <div class="hero-point"><strong>Processo claro</strong><span>Do diagnóstico à entrega</span></div>
+      </div>
+
+      <!-- About Item -->
+      <h3 class="ds-subtitle" style="margin-top:48px">About Item</h3>
+      <p class="ds-desc">Card numerado do painel Sobre.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;max-width:600px">
+        <div class="about-item">
+          <strong>01</strong>
+          <h3>Diagnóstico inicial</h3>
+          <p class="text">Entendimento do problema antes da ida a campo.</p>
+        </div>
+        <div class="about-item">
+          <strong>02</strong>
+          <h3>Execução técnica</h3>
+          <p class="text">Levantamento, conferência, análise e organização.</p>
+        </div>
+      </div>
+
+      <!-- CTA Box -->
+      <h3 class="ds-subtitle" style="margin-top:48px">CTA Box</h3>
+      <p class="ds-desc">Bloco de chamada para ação com imagem de fundo e overlay horizontal.</p>
+      <div class="cta-box" style="max-width:100%">
+        <img src="assets/images/contact-banner.webp" alt="Imagem de destaque do contato" />
+        <div class="cta-overlay">
+          <div class="cta-copy">
+            <div class="eyebrow" style="color:#80d1a8">Contato</div>
+            <h2>Pronto para transformar essa base em site comercial?</h2>
+            <p>Página organizada com imagens locais, linkagem correta e animações funcionando.</p>
+            <div class="hero-actions">
+              <a class="button" href="#!">Solicitar orçamento</a>
+              <a class="button outline" href="#!">Voltar ao topo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Toggle -->
+      <h3 class="ds-subtitle" style="margin-top:48px">Mobile Toggle</h3>
+      <p class="ds-desc">Botão de menu mobile, visível apenas em viewport ≤ 920px.</p>
+      <div style="background:#0d141b;padding:28px;border-radius:22px;display:inline-block">
+        <button class="mobile-toggle" type="button" aria-expanded="false" aria-label="Abrir menu" style="display:inline-flex">Menu</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════ 4 · LAYOUT & SPACING ═══════ -->
+  <section class="ds-section ds-section-soft" id="ds-layout">
+    <div class="container">
+      <div class="ds-label">Layout &amp; Spacing</div>
+      <h2 class="ds-title">Containers, grids e espaçamento</h2>
+
+      <!-- Container -->
+      <h3 class="ds-subtitle">Container</h3>
+      <p class="ds-desc">Largura: min(1200px, calc(100% - 32px)). Classe: <code>.container</code></p>
+      <div class="ds-layout-demo">
+        <div class="container" style="background:rgba(44,122,90,.06);border:2px dashed rgba(44,122,90,.22);border-radius:14px;padding:20px;text-align:center">
+          <span style="font-size:.82rem;font-weight:600;color:var(--brand)">.container — max 1200px</span>
+        </div>
+      </div>
+
+      <!-- Section padding -->
+      <h3 class="ds-subtitle">Section Padding</h3>
+      <p class="ds-desc">Padding vertical: 96px (desktop) → 72px (≤640px). Classe: <code>.section</code></p>
+
+      <!-- Hero Grid -->
+      <h3 class="ds-subtitle" style="margin-top:28px">Hero Grid (2-col)</h3>
+      <p class="ds-desc"><code>.hero-grid</code> — grid-template-columns: 1.05fr / 0.95fr, gap 40px, alinha centro vertical. Colapsa em 1 coluna ≤ 1180px.</p>
+      <div class="ds-layout-demo">
+        <div style="display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:40px;align-items:center">
+          <div class="placeholder placeholder-tall">hero-copy (1.05fr)</div>
+          <div class="placeholder placeholder-tall">hero-visual (0.95fr)</div>
+        </div>
+      </div>
+
+      <!-- Services Grid -->
+      <h3 class="ds-subtitle">Services Grid (3-col)</h3>
+      <p class="ds-desc"><code>.services-grid</code> — 3 colunas iguais, gap 24px. Colapsa: 2col ≤ 920px → 1col ≤ 640px.</p>
+      <div class="ds-layout-demo">
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+          <div class="placeholder">Card 1</div>
+          <div class="placeholder">Card 2</div>
+          <div class="placeholder">Card 3</div>
+        </div>
+      </div>
+
+      <!-- About Grid -->
+      <h3 class="ds-subtitle">About Grid (Split)</h3>
+      <p class="ds-desc"><code>.about-grid</code> — 0.92fr / 1.08fr, gap 42px. Colapsa 1col ≤ 1180px (imagem no topo).</p>
+      <div class="ds-layout-demo">
+        <div style="display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:42px;align-items:center">
+          <div class="placeholder placeholder-tall">about-media (.92fr)</div>
+          <div class="placeholder placeholder-tall">about-content (1.08fr)</div>
+        </div>
+      </div>
+
+      <!-- Process Grid -->
+      <h3 class="ds-subtitle">Process Grid (5-col)</h3>
+      <p class="ds-desc"><code>.process-grid</code> — 5 colunas iguais, gap 18px. Colapsa: 3col → 2col → 1col.</p>
+      <div class="ds-layout-demo">
+        <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px">
+          <div class="placeholder">1</div>
+          <div class="placeholder">2</div>
+          <div class="placeholder">3</div>
+          <div class="placeholder">4</div>
+          <div class="placeholder">5</div>
+        </div>
+      </div>
+
+      <!-- About Panel -->
+      <h3 class="ds-subtitle">About Panel (2-col)</h3>
+      <p class="ds-desc"><code>.about-panel</code> — 2 colunas iguais, gap 18px. Items numerados com strong + h3 + p.</p>
+      <div class="ds-layout-demo">
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px">
+          <div class="placeholder">Item 01</div>
+          <div class="placeholder">Item 02</div>
+          <div class="placeholder">Item 03</div>
+          <div class="placeholder">Item 04</div>
+        </div>
+      </div>
+
+      <!-- Testimonials Grid -->
+      <h3 class="ds-subtitle">Testimonials Grid (3-col)</h3>
+      <p class="ds-desc"><code>.testimonials-grid</code> — 3 colunas iguais, gap 24px.</p>
+      <div class="ds-layout-demo">
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+          <div class="placeholder">Testimonial 1</div>
+          <div class="placeholder">Testimonial 2</div>
+          <div class="placeholder">Testimonial 3</div>
+        </div>
+      </div>
+
+      <!-- Hero Points Grid -->
+      <h3 class="ds-subtitle">Hero Points (3-col inline)</h3>
+      <p class="ds-desc"><code>.hero-points</code> — 3 colunas, gap 16px. Inside hero section.</p>
+      <div class="ds-layout-demo">
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+          <div class="placeholder">Point 1</div>
+          <div class="placeholder">Point 2</div>
+          <div class="placeholder">Point 3</div>
+        </div>
+      </div>
+
+      <!-- Spacing tokens -->
+      <h3 class="ds-subtitle" style="margin-top:28px">Spacing Tokens</h3>
+      <table class="ds-type-table">
+        <tbody>
+          <tr><td class="ds-type-name">Section pad</td><td>96px (desktop) → 72px (mobile)</td><td class="ds-type-spec">.section</td></tr>
+          <tr><td class="ds-type-name">Hero pad</td><td>48px top / 56px bottom</td><td class="ds-type-spec">.hero</td></tr>
+          <tr><td class="ds-type-name">Card body</td><td>24px → 20px (mobile)</td><td class="ds-type-spec">.service-body</td></tr>
+          <tr><td class="ds-type-name">Grid gap L</td><td>40–42px</td><td class="ds-type-spec">hero/about grid</td></tr>
+          <tr><td class="ds-type-name">Grid gap M</td><td>24px</td><td class="ds-type-spec">services/testimonials</td></tr>
+          <tr><td class="ds-type-name">Grid gap S</td><td>16–18px</td><td class="ds-type-spec">points/panel/process</td></tr>
+          <tr><td class="ds-type-name">--radius</td><td>24px (global token)</td><td class="ds-type-spec">:root</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ═══════ 5 · MOTION & INTERACTION ═══════ -->
+  <section class="ds-section ds-section-light" id="ds-motion">
+    <div class="container">
+      <div class="ds-label">Motion &amp; Interaction</div>
+      <h2 class="ds-title">Animações e interações</h2>
+      <p class="ds-desc">Todas as animações presentes no site original, demonstradas com exemplos interativos reais.</p>
+
+      <div class="ds-motion-grid">
+
+        <!-- Reveal (entrance) -->
+        <div class="ds-motion-item">
+          <h3>Reveal on Scroll</h3>
+          <p>Entrada suave com fade e lift de 30px. IntersectionObserver com threshold 0.12.</p>
+          <div class="reveal" style="padding:20px;background:var(--surface-2);border-radius:14px">
+            <div class="eyebrow">Elemento revelado</div>
+            <h3>Conteúdo que aparece ao scroll</h3>
+          </div>
+          <code>.reveal → .reveal.is-visible</code>
+          <br><code>opacity .7s ease, transform .7s ease</code>
+        </div>
+
+        <!-- Marquee -->
+        <div class="ds-motion-item">
+          <h3>Marquee (Hero Slider)</h3>
+          <p>Scroll infinito horizontal. Track 1: 38s. Track 2: 46s reverso.</p>
+          <div style="overflow:hidden;border-radius:14px;height:80px;position:relative">
+            <div style="display:flex;gap:10px;width:max-content;animation:marquee 12s linear infinite">
+              <div style="width:100px;height:70px;border-radius:10px;background:var(--brand);opacity:.7;flex:0 0 auto"></div>
+              <div style="width:100px;height:70px;border-radius:10px;background:var(--brand-2);opacity:.7;flex:0 0 auto"></div>
+              <div style="width:100px;height:70px;border-radius:10px;background:#80d1a8;opacity:.7;flex:0 0 auto"></div>
+              <div style="width:100px;height:70px;border-radius:10px;background:var(--brand);opacity:.7;flex:0 0 auto"></div>
+              <div style="width:100px;height:70px;border-radius:10px;background:var(--brand-2);opacity:.7;flex:0 0 auto"></div>
+              <div style="width:100px;height:70px;border-radius:10px;background:#80d1a8;opacity:.7;flex:0 0 auto"></div>
+              <div style="width:100px;height:70px;border-radius:10px;background:var(--brand);opacity:.7;flex:0 0 auto"></div>
+              <div style="width:100px;height:70px;border-radius:10px;background:var(--brand-2);opacity:.7;flex:0 0 auto"></div>
+            </div>
+          </div>
+          <code>@keyframes marquee { 0%→-50% }</code>
+        </div>
+
+        <!-- Button hover -->
+        <div class="ds-motion-item">
+          <h3>Button Hover Lift</h3>
+          <p>Eleva -2px e escurece o fundo ao hover. Transição de 0.25s ease.</p>
+          <a class="button" href="#!" style="pointer-events:auto">Passe o mouse aqui</a>
+          <code>transform .25s, background .25s</code>
+        </div>
+
+        <!-- Card hover -->
+        <div class="ds-motion-item">
+          <h3>Service Card Hover</h3>
+          <p>Card eleva -4px, sombra cresce. Imagem interna dá scale(1.04). 0.25s / 0.5s ease.</p>
+          <article class="service-card" style="max-width:280px;margin:0 auto">
+            <div class="service-media" style="height:120px"><img src="assets/images/service-area-02.webp" alt="Demo" /></div>
+            <div class="service-body" style="padding:16px">
+              <span class="service-badge">Hover demo</span>
+              <h3>Passe o mouse</h3>
+            </div>
+          </article>
+          <code>card: .25s ease | img: .5s ease</code>
+        </div>
+
+        <!-- Nav link opacity -->
+        <div class="ds-motion-item">
+          <h3>Nav Link Opacity</h3>
+          <p>Links de nav mudam de opacity .92 para 1 no hover.</p>
+          <div style="display:flex;gap:18px;justify-content:center;padding:16px;background:#0d141b;border-radius:14px">
+            <a href="#!" style="font-weight:600;font-size:.96rem;opacity:.92;color:#e6edf2;transition:opacity .2s">Serviços</a>
+            <a href="#!" style="font-weight:600;font-size:.96rem;opacity:.92;color:#e6edf2;transition:opacity .2s">Sobre</a>
+            <a href="#!" style="font-weight:600;font-size:.96rem;opacity:.92;color:#e6edf2;transition:opacity .2s">Processo</a>
+          </div>
+          <code>.nav a { opacity: .92 → 1 }</code>
+        </div>
+
+        <!-- Outline button hover -->
+        <div class="ds-motion-item">
+          <h3>Outline Button Hover</h3>
+          <p>Background ganha rgba(255,255,255,.08) no hover.</p>
+          <div style="background:#0d141b;padding:20px;border-radius:14px;text-align:center">
+            <a class="button outline" href="#!">Hover me</a>
+          </div>
+          <code>background .25s, border-color .25s</code>
+        </div>
+
+        <!-- Reduced motion -->
+        <div class="ds-motion-item">
+          <h3>Reduced Motion</h3>
+          <p>Respeita <code>prefers-reduced-motion</code>: desativa scroll suave, reveal, marquee e transições de botão/card.</p>
+          <div style="padding:14px;background:var(--surface-2);border-radius:14px;font-size:.85rem;color:var(--text-soft)">
+            Quando ativo: <code>transition:none</code>, <code>animation:none</code>, <code>opacity:1;transform:none</code>
+          </div>
+          <code>@media (prefers-reduced-motion)</code>
+        </div>
+
+        <!-- Mobile menu toggle -->
+        <div class="ds-motion-item">
+          <h3>Mobile Menu Toggle</h3>
+          <p>Header ganha classe <code>.is-open</code>. Nav aparece como dropdown absoluto com bg, border-radius 24px e shadow.</p>
+          <div style="padding:14px;background:var(--surface-2);border-radius:14px;font-size:.85rem;color:var(--text-soft)">
+            JS: <code>header.classList.toggle('is-open')</code><br>
+            Body overflow hidden ≤ 920px
+          </div>
+          <code>Triggered via .mobile-toggle click</code>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════ FOOTER ═══════ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="logo">Alta <span>Precisão</span></div>
+      <nav class="footer-nav" aria-label="Rodapé">
+        <a href="#ds-hero">Hero</a>
+        <a href="#ds-typography">Typography</a>
+        <a href="#ds-colors">Colors</a>
+        <a href="#ds-components">Components</a>
+        <a href="#ds-layout">Layout</a>
+        <a href="#ds-motion">Motion</a>
+      </nav>
+      <div>Design System — Referência visual completa.</div>
+    </div>
+  </footer>
+
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

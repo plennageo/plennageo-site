@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alta Precisão — Topografia e Georreferenciamento</title>
+  <meta name="description" content="Especialistas em topografia, georreferenciamento e regularização de imóveis rurais e urbanos. Atuação técnica premium em campo e elaboração de dossiês documentais." />
+  
+  <!-- ═══════ ESTILOS DO PROJETO ═══════ -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  
+  <!-- ═══════ ESTILOS LOCAIS: DESIGN SYSTEM PREMIUM ═══════ -->
+  <style>
+    /* ── ANIMAÇÕES DE ENTRADA ── */
+    @keyframes textReveal {
+      0% { clip-path: inset(0 100% 0 0); }
+      100% { clip-path: inset(0 0% 0 0); }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(44,122,90,.3), 0 0 60px rgba(44,122,90,.1); }
+      50% { box-shadow: 0 0 40px rgba(44,122,90,.5), 0 0 100px rgba(44,122,90,.2); }
+    }
+    @keyframes floatUp {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes shimmer {
+      from { transform: translateX(-100%) skewX(-15deg); }
+      to { transform: translateX(200%) skewX(-15deg); }
+    }
+
+    /* ── EFEITO REVEAL ON SCROLL ── */
+    .anim-in { 
+      opacity: 0; 
+      transform: translateY(30px); 
+      filter: blur(8px); 
+      transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1), filter .8s ease; 
+    }
+    .anim-in.is-visible { 
+      opacity: 1; 
+      transform: translateY(0); 
+      filter: blur(0); 
+    }
+    .anim-in.d1 { transition-delay: .1s; } 
+    .anim-in.d2 { transition-delay: .2s; }
+    .anim-in.d3 { transition-delay: .3s; } 
+    .anim-in.d4 { transition-delay: .4s; }
+    .anim-in.d5 { transition-delay: .5s; } 
+    .anim-in.d6 { transition-delay: .6s; }
+
+    /* ── SHIMMER & GLOW EM BOTÕES ── */
+    .btn-shimmer { position: relative; overflow: hidden; }
+    .btn-shimmer::after {
+      content: ""; 
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+      transform: translateX(-100%) skewX(-15deg);
+      transition: none;
+    }
+    .btn-shimmer:hover::after { animation: shimmer 1.2s ease forwards; }
+
+    .glow-pulse { animation: pulseGlow 3s ease-in-out infinite; }
+
+    /* ── EFEITO FLASHLIGHT EM CARDS ── */
+    .flashlight-card { position: relative; overflow: hidden; }
+    .flashlight-card::before {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(600px circle at var(--mx) var(--my), rgba(44,122,90,.15), transparent 40%);
+      opacity: 0; transition: opacity .5s; pointer-events: none; z-index: 2;
+    }
+    .flashlight-card:hover::before { opacity: 1; }
+
+    /* ── GLASSMORPHISM PANELS ── */
+    .glass-panel {
+      background: rgba(255,255,255,.04);
+      backdrop-filter: saturate(160%) blur(20px);
+      -webkit-backdrop-filter: saturate(160%) blur(20px);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius);
+    }
+    
+    /* ── BACKGROUND PARTICLES ── */
+    .hero-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+    .hero-particles .orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .4; }
+    .hero-particles .orb-1 { width: 400px; height: 400px; background: rgba(44,122,90,.35); top: -100px; left: -100px; animation: floatUp 8s ease-in-out infinite; }
+    .hero-particles .orb-2 { width: 300px; height: 300px; background: rgba(128,209,168,.2); bottom: -50px; right: -80px; animation: floatUp 10s ease-in-out infinite 2s; }
+    .hero-particles .orb-3 { width: 200px; height: 200px; background: rgba(44,122,90,.15); top: 40%; left: 60%; animation: floatUp 12s ease-in-out infinite 4s; }
+
+    /* ── AJUSTES ESTRUTURAIS HERO E ALINHAMENTO BASE ── */
+    .hero {
+      position: relative;
+      padding-top: 24px; 
+      padding-bottom: 0;
+    }
+    .hero h1 { animation: textReveal 1.2s cubic-bezier(.16,1,.3,1) .3s both; margin: 0; }
+    
+    /* Faz com que ambas as colunas tenham matematicamente a mesma altura (Base alignment) */
+    .hero-grid { align-items: stretch; }
+
+    /* A Coluna Esquerda vira um flex container completo */
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* O Bloco de textos "cresce" e empurra os boxes para o absoluto final da estrutura */
+    .hero-text-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* O texto paira matematicamente no centro do espaço livre */
+      align-items: flex-start;
+      gap: 28px;
+      flex-grow: 1; /* O pulo do gato: absorve altura fazendo os points descerem! */
+    }
+
+    /* Reset das margens padrão do style.css para garantir o alinhamento da nossa grid/flex */
+    .hero-text-block .eyebrow,
+    .hero-text-block h1,
+    .hero-text-block .support,
+    .hero-text-block .hero-actions {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    /* Agora .hero-points bate exatamente na mesma linha e base da .hero-visual */
+    .hero-copy .hero-points {
+      width: 100%;
+      margin-top: 40px; 
+      margin-bottom: 0;
+      padding-top: 0;
+    }
+    
+    @media (max-width: 920px) {
+      .hero { padding-top: 32px; }
+      .hero-grid { align-items: center; } /* Removemos o stretch em mobile pois as colunas empilham */
+      .hero-particles .orb { filter: blur(40px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════ NAVBAR ═══════ -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#">Alta <span>Precisão</span></a>
+      <nav class="nav">
+        <a href="#solucoes">Soluções</a>
+        <a href="#georreferenciamento">Georreferenciamento</a>
+        <a href="#topografia">Topografia</a>
+        <a href="#empresa">A Empresa</a>
+      </nav>
+      <!-- Ícone SVG local para o Menu Mobile -->
+      <button class="mobile-toggle" aria-label="Abrir menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      <a class="button btn-shimmer" href="#orcamento"><span style="position:relative;z-index:1">Fale Conosco</span></a>
+    </div>
+  </header>
+
+  <!-- ═══════ HERO PREMIUM ═══════ -->
+  <main>
+    <section class="hero" id="home">
+      <!-- Partículas de fundo animadas -->
+      <div class="hero-particles">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+      </div>
+
+      <div class="container hero-grid" style="position: relative; z-index: 2;">
+        
+        <!-- ── COLUNA ESQUERDA: TEXTO ── -->
+        <div class="hero-copy">
+          
+          <!-- Bloco flex-grow que centraliza o texto e empurra a caixa de Highlights (points) para a base -->
+          <div class="hero-text-block">
+            <div class="anim-in d1 eyebrow" style="color: #80d1a8;">Topografia Profissional</div>
+            
+            <h1 class="anim-in d2">Precisão técnica e segurança para decisões imobiliárias.</h1>
+            
+            <p class="support anim-in d3">
+              Levantamentos, georreferenciamento e regularização de imóveis rurais e urbanos. Atuação rigorosa em campo com documentação completa em escritório para aprovações.
+            </p>
+            
+            <!-- Botões CTA -->
+            <div class="hero-actions anim-in d4">
+              <a class="button btn-shimmer glow-pulse" href="#orcamento" style="position: relative; overflow: hidden;">
+                <span style="position: relative; z-index: 1;">Solicitar orçamento</span>
+              </a>
+              <a class="button outline" href="#whatsapp" style="transition: all .3s;">
+                Falar no WhatsApp
+              </a>
+            </div>
+          </div>
+          
+          <!-- Cards de Highlights: Agora seu limite horizontal inferior acompanha exatamente a vitrine do slider -->
+          <div class="hero-points anim-in d5">
+            <div class="hero-point glass-panel flashlight-card" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+              <strong>Rural e Urbano</strong>
+              <span>Conformidade com INCRA e Prefeituras</span>
+            </div>
+            <div class="hero-point glass-panel flashlight-card" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+              <strong>Campo e Gabinete</strong>
+              <span>Diagnóstico e tecnologia in loco</span>
+            </div>
+            <div class="hero-point glass-panel flashlight-card" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+              <strong>Gestão Documental</strong>
+              <span>Dossiês técnicos organizados com clareza</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── COLUNA DIREITA: ESTRUTURA VISUAL ── -->
+        <div class="hero-visual anim-in d3">
+          <!-- Marquee vertical/horizontal grid slider -->
+          <div class="hero-slider" aria-label="Galeria visual de serviços">
+            
+            <!-- Track 1: Direção Normal -->
+            <div class="hero-track">
+              <!-- Série original -->
+              <figure class="hero-card"><img src="assets/images/hero-slide-01.webp" alt="Serviços no campo" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-02.webp" alt="Equipamentos topográficos" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-03.webp" alt="Medidor de precisão em base rural" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="Documentos sobre a planta" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-05.webp" alt="Área urbana georreferenciada" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-06.webp" alt="Reunião com mapa de regularização" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="Mapeamento com drone" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="Mosaicos aéreos do terreno" /></figure>
+              <!-- Duplicado para manter a fluidez do scroll contínuo -->
+              <figure class="hero-card"><img src="assets/images/hero-slide-01.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-02.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-03.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-05.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-06.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="" aria-hidden="true" /></figure>
+            </div>
+            
+            <!-- Track 2: Direção Reversa -->
+            <div class="hero-track">
+              <!-- Mescla com imagens de service-area para maior variedade técnica -->
+              <figure class="hero-card"><img src="assets/images/service-area-01.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/service-area-02.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/service-area-03.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-06.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-05.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="" aria-hidden="true" /></figure>
+              <!-- Duplicado iterativo -->
+              <figure class="hero-card"><img src="assets/images/service-area-01.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/service-area-02.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/service-area-03.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-06.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-05.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="" aria-hidden="true" /></figure>
+            </div>
+
+          </div>
+        </div>
+        
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════ SCRIPTS DA PÁGINA ═══════ -->
+  <!-- Script global para interações como toggle menu que já vem no projeto -->
+  <script src="assets/js/site.js"></script>
+  
+  <!-- Script inline focado exclusivamente no visual Premium Design System -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Intersection Observer nativo (sem dependências pesadas) para as animações .anim-in
+      const animEls = document.querySelectorAll('.anim-in');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            // Removemos a observação para otimizar desempenho após a primeira revelação
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+      
+      animEls.forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+</html>
