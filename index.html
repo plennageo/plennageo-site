@@ -623,12 +623,19 @@
 
   <!-- ═══════ ESTILO LOCAL PARA O FOOTER 5 COLUNAS ═══════ -->
   <style>
-    /* Grid recalculado matematicamente com folga para a coluna de Serviços (1.9fr) */
+    /* Grid recalculado com extrema precisão de massa visual e espaço em branco */
     .footer-grid-5 {
       display: grid;
-      grid-template-columns: 1.4fr 1.9fr 0.9fr 1.4fr 1.4fr;
-      gap: 40px;
-      margin-bottom: 64px;
+      /* Col 1 (Marca): 2.1fr para não sufocar
+         Col 2 (Serviços): 2.6fr para garantir espaçamento natural antes da navegação
+         Col 3 (Nav): 1.2fr ajustado para blindar largura do texto de menus longos
+         Col 4 (Contato): 2.2fr com lastro paramétrico
+         Col 5 (CTA): minmax(240px, 1.6fr) garantindo uma "borda direita" pesada e sólida
+      */
+      grid-template-columns: 2.1fr 2.6fr 1.2fr 2.2fr minmax(240px, 1.6fr);
+      column-gap: clamp(32px, 4vw, 56px);
+      row-gap: 48px;
+      margin-bottom: 72px;
     }
     
     /* Utility class para garantir que strings vitais não quebrem no Desktop */
@@ -716,7 +723,7 @@
           <nav class="footer-nav" style="display: flex; flex-direction: column; gap: 14px;">
             <a href="#home" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Início</a>
             <a href="#solucoes" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Serviços</a>
-            <a href="#processo" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Como funciona</a>
+            <a href="#processo" class="nowrap-desktop" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Como funciona</a>
             <a href="#diferenciais" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Diferenciais</a>
             <a href="#orcamento" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Contato</a>
           </nav>
