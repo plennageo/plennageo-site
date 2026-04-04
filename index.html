@@ -623,19 +623,26 @@
 
   <!-- ═══════ ESTILO LOCAL PARA O FOOTER 5 COLUNAS ═══════ -->
   <style>
+    /* Grid recalculado matematicamente com folga para a coluna de Serviços (1.9fr) */
     .footer-grid-5 {
       display: grid;
-      grid-template-columns: 2fr 1.5fr 1fr 1.5fr 1.5fr;
-      gap: 32px;
+      grid-template-columns: 1.4fr 1.9fr 0.9fr 1.4fr 1.4fr;
+      gap: 40px;
       margin-bottom: 64px;
     }
-    @media (max-width: 1024px) {
-      .footer-grid-5 { grid-template-columns: 1fr 1fr 1fr; gap: 40px; }
+    
+    /* Utility class para garantir que strings vitais não quebrem no Desktop */
+    @media (min-width: 1025px) {
+      .nowrap-desktop { white-space: nowrap; }
     }
-    @media (max-width: 768px) {
+    
+    @media (max-width: 1100px) {
+      .footer-grid-5 { grid-template-columns: 1.5fr 2fr 1.5fr; gap: 40px; }
+    }
+    @media (max-width: 860px) {
       .footer-grid-5 { grid-template-columns: 1fr 1fr; }
     }
-    @media (max-width: 480px) {
+    @media (max-width: 580px) {
       .footer-grid-5 { grid-template-columns: 1fr; }
     }
   </style>
@@ -660,13 +667,13 @@
         <!-- Coluna 2: Serviços -->
         <div class="footer-col anim-in d2">
           <h4>Serviços</h4>
-          <nav class="footer-nav" style="gap: 16px;">
+          <nav class="footer-nav" style="display: flex; flex-direction: column; gap: 16px;">
             <a href="#" style="display: flex; align-items: flex-start; gap: 12px; text-decoration: none;" class="footer-link">
               <span class="footer-icon" style="color: #80d1a8; margin-top: 2px;">
                 <!-- Levantamento Topográfico: Map / Grid -->
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
               </span>
-              <span class="footer-text">Levantamento Topográfico</span>
+              <span class="footer-text nowrap-desktop">Levantamento Topográfico</span>
             </a>
             
             <a href="#" style="display: flex; align-items: flex-start; gap: 12px; text-decoration: none;" class="footer-link">
@@ -674,7 +681,7 @@
                 <!-- Georreferenciamento: Map Pin / GPS -->
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
               </span>
-              <span class="footer-text">Georreferenciamento</span>
+              <span class="footer-text nowrap-desktop">Georreferenciamento</span>
             </a>
             
             <a href="#" style="display: flex; align-items: flex-start; gap: 12px; text-decoration: none;" class="footer-link">
@@ -682,7 +689,7 @@
                 <!-- Regularização de Imóveis: Document / Checklist -->
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
               </span>
-              <span class="footer-text">Regularização de Imóveis</span>
+              <span class="footer-text nowrap-desktop">Regularização de Imóveis</span>
             </a>
             
             <a href="#" style="display: flex; align-items: flex-start; gap: 12px; text-decoration: none;" class="footer-link">
@@ -690,7 +697,7 @@
                 <!-- Retificação de Área: Ruler / Edit -->
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="10"></line><line x1="10" y1="6" x2="10" y2="10"></line><line x1="14" y1="6" x2="14" y2="10"></line><line x1="18" y1="6" x2="18" y2="10"></line></svg>
               </span>
-              <span class="footer-text">Retificação de Área</span>
+              <span class="footer-text nowrap-desktop">Retificação de Área</span>
             </a>
             
             <a href="#" style="display: flex; align-items: flex-start; gap: 12px; text-decoration: none;" class="footer-link">
@@ -698,7 +705,7 @@
                 <!-- Apoio Documental: Archive / Folder -->
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
               </span>
-              <span class="footer-text">Apoio Documental</span>
+              <span class="footer-text nowrap-desktop">Apoio Documental</span>
             </a>
           </nav>
         </div>
@@ -706,12 +713,12 @@
         <!-- Coluna 3: Navegação -->
         <div class="footer-col anim-in d3">
           <h4>Navegação</h4>
-          <nav class="footer-nav">
-            <a href="#home">Início</a>
-            <a href="#solucoes">Serviços</a>
-            <a href="#processo">Como funciona</a>
-            <a href="#diferenciais">Diferenciais</a>
-            <a href="#orcamento">Contato</a>
+          <nav class="footer-nav" style="display: flex; flex-direction: column; gap: 14px;">
+            <a href="#home" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Início</a>
+            <a href="#solucoes" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Serviços</a>
+            <a href="#processo" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Como funciona</a>
+            <a href="#diferenciais" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Diferenciais</a>
+            <a href="#orcamento" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Contato</a>
           </nav>
         </div>
         
