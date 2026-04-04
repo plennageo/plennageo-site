@@ -1,101 +1,217 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Alta Precisão — Topografia e Georreferenciamento</title>
-  <meta name="description" content="Especialistas em topografia, georreferenciamento e regularização de imóveis rurais e urbanos. Atuação técnica premium em campo e elaboração de dossiês documentais." />
-  
+  <title>Plenna — Topografia e Georreferenciamento</title>
+  <meta name="description"
+    content="Especialistas em topografia, georreferenciamento e regularização de imóveis rurais e urbanos. Atuação técnica premium em campo e elaboração de dossiês documentais." />
+
   <!-- ═══════ ESTILOS DO PROJETO ═══════ -->
   <link rel="stylesheet" href="assets/css/style.css" />
-  
+
   <!-- ═══════ ESTILOS LOCAIS: DESIGN SYSTEM PREMIUM ═══════ -->
   <style>
     /* ── ANIMAÇÕES DE ENTRADA ── */
     @keyframes textReveal {
-      0% { clip-path: inset(0 100% 0 0); }
-      100% { clip-path: inset(0 0% 0 0); }
+      0% {
+        clip-path: inset(0 100% 0 0);
+      }
+
+      100% {
+        clip-path: inset(0 0% 0 0);
+      }
     }
+
     @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 0 20px rgba(44,122,90,.3), 0 0 60px rgba(44,122,90,.1); }
-      50% { box-shadow: 0 0 40px rgba(44,122,90,.5), 0 0 100px rgba(44,122,90,.2); }
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px rgba(44, 122, 90, .3), 0 0 60px rgba(44, 122, 90, .1);
+      }
+
+      50% {
+        box-shadow: 0 0 40px rgba(44, 122, 90, .5), 0 0 100px rgba(44, 122, 90, .2);
+      }
     }
+
     @keyframes floatUp {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-12px); }
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
     }
+
     @keyframes shimmer {
-      from { transform: translateX(-100%) skewX(-15deg); }
-      to { transform: translateX(200%) skewX(-15deg); }
+      from {
+        transform: translateX(-100%) skewX(-15deg);
+      }
+
+      to {
+        transform: translateX(200%) skewX(-15deg);
+      }
     }
 
     /* ── EFEITO REVEAL ON SCROLL ── */
-    .anim-in { 
-      opacity: 0; 
-      transform: translateY(30px); 
-      filter: blur(8px); 
-      transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1), filter .8s ease; 
+    .anim-in {
+      opacity: 0;
+      transform: translateY(30px);
+      filter: blur(8px);
+      transition: opacity .8s cubic-bezier(.16, 1, .3, 1), transform .8s cubic-bezier(.16, 1, .3, 1), filter .8s ease;
     }
-    .anim-in.is-visible { 
-      opacity: 1; 
-      transform: translateY(0); 
-      filter: blur(0); 
+
+    .anim-in.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
     }
-    .anim-in.d1 { transition-delay: .1s; } 
-    .anim-in.d2 { transition-delay: .2s; }
-    .anim-in.d3 { transition-delay: .3s; } 
-    .anim-in.d4 { transition-delay: .4s; }
-    .anim-in.d5 { transition-delay: .5s; } 
-    .anim-in.d6 { transition-delay: .6s; }
+
+    .anim-in.d1 {
+      transition-delay: .1s;
+    }
+
+    .anim-in.d2 {
+      transition-delay: .2s;
+    }
+
+    .anim-in.d3 {
+      transition-delay: .3s;
+    }
+
+    .anim-in.d4 {
+      transition-delay: .4s;
+    }
+
+    .anim-in.d5 {
+      transition-delay: .5s;
+    }
+
+    .anim-in.d6 {
+      transition-delay: .6s;
+    }
 
     /* ── SHIMMER & GLOW EM BOTÕES ── */
-    .btn-shimmer { position: relative; overflow: hidden; }
+    .btn-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+
     .btn-shimmer::after {
-      content: ""; 
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .25), transparent);
       transform: translateX(-100%) skewX(-15deg);
       transition: none;
     }
-    .btn-shimmer:hover::after { animation: shimmer 1.2s ease forwards; }
 
-    .glow-pulse { animation: pulseGlow 3s ease-in-out infinite; }
+    .btn-shimmer:hover::after {
+      animation: shimmer 1.2s ease forwards;
+    }
+
+    .glow-pulse {
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
 
     /* ── EFEITO FLASHLIGHT EM CARDS ── */
-    .flashlight-card { position: relative; overflow: hidden; }
-    .flashlight-card::before {
-      content: ""; position: absolute; inset: 0;
-      background: radial-gradient(600px circle at var(--mx) var(--my), rgba(44,122,90,.15), transparent 40%);
-      opacity: 0; transition: opacity .5s; pointer-events: none; z-index: 2;
+    .flashlight-card {
+      position: relative;
+      overflow: hidden;
     }
-    .flashlight-card:hover::before { opacity: 1; }
+
+    .flashlight-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(600px circle at var(--mx) var(--my), rgba(44, 122, 90, .15), transparent 40%);
+      opacity: 0;
+      transition: opacity .5s;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .flashlight-card:hover::before {
+      opacity: 1;
+    }
 
     /* ── GLASSMORPHISM PANELS ── */
     .glass-panel {
-      background: rgba(255,255,255,.04);
+      background: rgba(255, 255, 255, .04);
       backdrop-filter: saturate(160%) blur(20px);
       -webkit-backdrop-filter: saturate(160%) blur(20px);
-      border: 1px solid rgba(255,255,255,.1);
+      border: 1px solid rgba(255, 255, 255, .1);
       border-radius: var(--radius);
     }
-    
+
     /* ── BACKGROUND PARTICLES ── */
-    .hero-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
-    .hero-particles .orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .4; }
-    .hero-particles .orb-1 { width: 400px; height: 400px; background: rgba(44,122,90,.35); top: -100px; left: -100px; animation: floatUp 8s ease-in-out infinite; }
-    .hero-particles .orb-2 { width: 300px; height: 300px; background: rgba(128,209,168,.2); bottom: -50px; right: -80px; animation: floatUp 10s ease-in-out infinite 2s; }
-    .hero-particles .orb-3 { width: 200px; height: 200px; background: rgba(44,122,90,.15); top: 40%; left: 60%; animation: floatUp 12s ease-in-out infinite 4s; }
+    .hero-particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-particles .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: .4;
+    }
+
+    .hero-particles .orb-1 {
+      width: 400px;
+      height: 400px;
+      background: rgba(44, 122, 90, .35);
+      top: -100px;
+      left: -100px;
+      animation: floatUp 8s ease-in-out infinite;
+    }
+
+    .hero-particles .orb-2 {
+      width: 300px;
+      height: 300px;
+      background: rgba(128, 209, 168, .2);
+      bottom: -50px;
+      right: -80px;
+      animation: floatUp 10s ease-in-out infinite 2s;
+    }
+
+    .hero-particles .orb-3 {
+      width: 200px;
+      height: 200px;
+      background: rgba(44, 122, 90, .15);
+      top: 40%;
+      left: 60%;
+      animation: floatUp 12s ease-in-out infinite 4s;
+    }
 
     /* ── AJUSTES ESTRUTURAIS HERO E ALINHAMENTO BASE ── */
     .hero {
       position: relative;
-      padding-top: 24px; 
-      padding-bottom: 112px; /* Respiro essencial para transição limpa entre dobras */
+      padding-top: 24px;
+      padding-bottom: 112px;
+      /* Respiro essencial para transição limpa entre dobras */
     }
-    .hero h1 { animation: textReveal 1.2s cubic-bezier(.16,1,.3,1) .3s both; margin: 0; }
-    
+
+    .hero h1 {
+      animation: textReveal 1.2s cubic-bezier(.16, 1, .3, 1) .3s both;
+      margin: 0;
+    }
+
     /* Faz com que ambas as colunas tenham matematicamente a mesma altura (Base alignment) */
-    .hero-grid { align-items: stretch; }
+    .hero-grid {
+      align-items: stretch;
+    }
 
     /* A Coluna Esquerda vira um flex container completo */
     .hero-copy {
@@ -107,10 +223,12 @@
     .hero-text-block {
       display: flex;
       flex-direction: column;
-      justify-content: center; /* O texto paira matematicamente no centro do espaço livre */
+      justify-content: center;
+      /* O texto paira matematicamente no centro do espaço livre */
       align-items: flex-start;
       gap: 28px;
-      flex-grow: 1; /* O pulo do gato: absorve altura fazendo os points descerem! */
+      flex-grow: 1;
+      /* O pulo do gato: absorve altura fazendo os points descerem! */
     }
 
     /* Reset das margens padrão do style.css para garantir o alinhamento da nossa grid/flex */
@@ -125,27 +243,36 @@
     /* Agora .hero-points bate exatamente na mesma linha e base da .hero-visual */
     .hero-copy .hero-points {
       width: 100%;
-      margin-top: 40px; 
+      margin-top: 40px;
       margin-bottom: 0;
       padding-top: 0;
     }
-    
+
     @media (max-width: 920px) {
-      .hero { 
-        padding-top: 32px; 
-        padding-bottom: 72px; /* Respiro proporcional para telas móveis */
+      .hero {
+        padding-top: 32px;
+        padding-bottom: 72px;
+        /* Respiro proporcional para telas móveis */
       }
-      .hero-grid { align-items: center; } /* Removemos o stretch em mobile pois as colunas empilham */
-      .hero-particles .orb { filter: blur(40px); }
+
+      .hero-grid {
+        align-items: center;
+      }
+
+      /* Removemos o stretch em mobile pois as colunas empilham */
+      .hero-particles .orb {
+        filter: blur(40px);
+      }
     }
   </style>
 </head>
+
 <body>
 
   <!-- ═══════ NAVBAR ═══════ -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="logo" href="#">Alta <span>Precisão</span></a>
+      <a class="logo" href="#">Plenna <span>Topografia</span></a>
       <nav class="nav">
         <a href="#solucoes">Soluções</a>
         <a href="#georreferenciamento">Georreferenciamento</a>
@@ -154,7 +281,8 @@
       </nav>
       <!-- Ícone SVG local para o Menu Mobile -->
       <button class="mobile-toggle" aria-label="Abrir menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
           <line x1="3" y1="12" x2="21" y2="12"></line>
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -175,20 +303,21 @@
       </div>
 
       <div class="container hero-grid" style="position: relative; z-index: 2;">
-        
+
         <!-- ── COLUNA ESQUERDA: TEXTO ── -->
         <div class="hero-copy">
-          
+
           <!-- Bloco flex-grow que centraliza o texto e empurra a caixa de Highlights (points) para a base -->
           <div class="hero-text-block">
             <div class="anim-in d1 eyebrow" style="color: #80d1a8;">Topografia Profissional</div>
-            
+
             <h1 class="anim-in d2">Precisão técnica e segurança para decisões imobiliárias.</h1>
-            
+
             <p class="support anim-in d3">
-              Levantamentos, georreferenciamento e regularização de imóveis rurais e urbanos. Atuação rigorosa em campo com documentação completa em escritório para aprovações.
+              Levantamentos, georreferenciamento e regularização de imóveis rurais e urbanos. Atuação rigorosa em campo
+              com documentação completa em escritório para aprovações.
             </p>
-            
+
             <!-- Botões CTA -->
             <div class="hero-actions anim-in d4">
               <a class="button btn-shimmer glow-pulse" href="#orcamento" style="position: relative; overflow: hidden;">
@@ -199,18 +328,21 @@
               </a>
             </div>
           </div>
-          
+
           <!-- Cards de Highlights: Agora seu limite horizontal inferior acompanha exatamente a vitrine do slider -->
           <div class="hero-points anim-in d5">
-            <div class="hero-point glass-panel flashlight-card" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+            <div class="hero-point glass-panel flashlight-card"
+              onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
               <strong>Rural e Urbano</strong>
               <span>Conformidade com INCRA e Prefeituras</span>
             </div>
-            <div class="hero-point glass-panel flashlight-card" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+            <div class="hero-point glass-panel flashlight-card"
+              onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
               <strong>Campo e Gabinete</strong>
               <span>Diagnóstico e tecnologia in loco</span>
             </div>
-            <div class="hero-point glass-panel flashlight-card" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+            <div class="hero-point glass-panel flashlight-card"
+              onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
               <strong>Gestão Documental</strong>
               <span>Dossiês técnicos organizados com clareza</span>
             </div>
@@ -221,183 +353,249 @@
         <div class="hero-visual anim-in d3">
           <!-- Marquee vertical/horizontal grid slider -->
           <div class="hero-slider" aria-label="Galeria visual de serviços">
-            
+
             <!-- Track 1: Direção Normal -->
             <div class="hero-track">
               <!-- Série original -->
               <figure class="hero-card"><img src="assets/images/hero-slide-01.webp" alt="Serviços no campo" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-02.webp" alt="Equipamentos topográficos" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-03.webp" alt="Medidor de precisão em base rural" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="Documentos sobre a planta" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-05.webp" alt="Área urbana georreferenciada" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-06.webp" alt="Reunião com mapa de regularização" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="Mapeamento com drone" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="Mosaicos aéreos do terreno" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-02.webp" alt="Equipamentos topográficos" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-03.webp"
+                  alt="Medidor de precisão em base rural" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="Documentos sobre a planta" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-05.webp"
+                  alt="Área urbana georreferenciada" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-06.webp"
+                  alt="Reunião com mapa de regularização" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="Mapeamento com drone" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="Mosaicos aéreos do terreno" />
+              </figure>
               <!-- Duplicado para manter a fluidez do scroll contínuo -->
-              <figure class="hero-card"><img src="assets/images/hero-slide-01.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-02.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-03.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-05.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-06.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-01.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-02.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-03.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-05.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-06.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="" aria-hidden="true" />
+              </figure>
             </div>
-            
+
             <!-- Track 2: Direção Reversa -->
             <div class="hero-track">
               <!-- Mescla com imagens de service-area para maior variedade técnica -->
-              <figure class="hero-card"><img src="assets/images/service-area-01.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/service-area-02.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/service-area-03.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-06.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-05.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/service-area-01.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/service-area-02.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/service-area-03.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-06.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-05.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="" aria-hidden="true" />
+              </figure>
               <!-- Duplicado iterativo -->
-              <figure class="hero-card"><img src="assets/images/service-area-01.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/service-area-02.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/service-area-03.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-06.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-05.webp" alt="" aria-hidden="true" /></figure>
-              <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="" aria-hidden="true" /></figure>
+              <figure class="hero-card"><img src="assets/images/service-area-01.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/service-area-02.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/service-area-03.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-08.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-07.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-06.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-05.webp" alt="" aria-hidden="true" />
+              </figure>
+              <figure class="hero-card"><img src="assets/images/hero-slide-04.webp" alt="" aria-hidden="true" />
+              </figure>
             </div>
 
           </div>
         </div>
-        
+
       </div>
     </section>
 
     <!-- ═══════ SEGUNDA DOBRA: SOLUÇÕES E CAPACIDADES ═══════ -->
     <section class="section section-soft" id="solucoes" style="position: relative; z-index: 10;">
       <div class="container">
-        
+
         <!-- Cabeçalho da Seção -->
         <div class="section-head">
           <div class="anim-in d1 eyebrow">Soluções Completas</div>
           <h2 class="anim-in d2">Do levantamento à regularização.</h2>
           <p class="text anim-in d3" style="font-size: 1.125rem; max-width: 680px; margin: 16px auto 0;">
-            Fornecemos segurança técnica e documentação especializada para garantir o valor, os limites territoriais e a completa legalidade da sua propriedade.
+            Fornecemos segurança técnica e documentação especializada para garantir o valor, os limites territoriais e a
+            completa legalidade da sua propriedade.
           </p>
         </div>
-        
+
         <!-- Grid de Serviços (Cards com Imagem) -->
         <div class="services-grid">
-          
+
           <!-- Card de Serviço 01 -->
-          <article class="service-card flashlight-card anim-in d4" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+          <article class="service-card flashlight-card anim-in d4"
+            onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
             <div class="service-media">
-              <img src="assets/images/service-area-01.webp" alt="Equipe realizando Levantamento Topográfico em campo" loading="lazy" />
+              <img src="assets/images/service-area-01.webp" alt="Equipe realizando Levantamento Topográfico em campo"
+                loading="lazy" />
             </div>
             <div class="service-body">
               <span class="service-badge">Planejamento &amp; Obras</span>
               <h3>Levantamento Topográfico</h3>
-              <p>Medição planialtimétrica detalhada do terreno para projetos arquitetônicos, locação de obras, loteamentos e infraestrutura urbana.</p>
+              <p>Medição planialtimétrica detalhada do terreno para projetos arquitetônicos, locação de obras,
+                loteamentos e infraestrutura urbana.</p>
             </div>
           </article>
 
           <!-- Card de Serviço 02 -->
-          <article class="service-card flashlight-card anim-in d5" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+          <article class="service-card flashlight-card anim-in d5"
+            onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
             <div class="service-media">
-              <img src="assets/images/service-area-02.webp" alt="Marcador de Georreferenciamento em propriedade rural" loading="lazy" />
+              <img src="assets/images/service-area-02.webp" alt="Marcador de Georreferenciamento em propriedade rural"
+                loading="lazy" />
             </div>
             <div class="service-body">
               <span class="service-badge">Certificação INCRA</span>
               <h3>Georreferenciamento (SIGEF)</h3>
-              <p>Fixação técnica dos limites no Sistema Geodésico Nacional, evitando litígios de sobreposição e garantindo rastreabilidade do imóvel rural.</p>
+              <p>Fixação técnica dos limites no Sistema Geodésico Nacional, evitando litígios de sobreposição e
+                garantindo rastreabilidade do imóvel rural.</p>
             </div>
           </article>
 
           <!-- Card de Serviço 03 -->
-          <article class="service-card flashlight-card anim-in d6" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+          <article class="service-card flashlight-card anim-in d6"
+            onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
             <div class="service-media">
-              <img src="assets/images/service-area-03.webp" alt="Documentos jurídicos de Regularização Fundiária" loading="lazy" />
+              <img src="assets/images/service-area-03.webp" alt="Documentos jurídicos de Regularização Fundiária"
+                loading="lazy" />
             </div>
             <div class="service-body">
               <span class="service-badge">Segurança Jurídica</span>
               <h3>Regularização Fundiária</h3>
-              <p>Atuação técnica na elaboração de dossiês para unificações, desmembramentos, retificação de área e processos em prefeituras e cartórios.</p>
+              <p>Atuação técnica na elaboração de dossiês para unificações, desmembramentos, retificação de área e
+                processos em prefeituras e cartórios.</p>
             </div>
           </article>
 
         </div>
-        
+
       </div>
     </section>
 
     <!-- ═══════ TERCEIRA DOBRA: METODOLOGIA E PROCESSO ═══════ -->
     <section class="section section-light" id="processo" style="position: relative; z-index: 9;">
       <div class="container">
-        
+
         <div class="about-grid">
-          
+
           <!-- Coluna Esquerda: Imagem Institucional + Etiqueta Glass -->
           <div class="about-media anim-in d2">
-            <img src="assets/images/hero-slide-06.webp" alt="Engenheiro analisando mapa de topografia em reunião" loading="lazy" />
-            
+            <img src="assets/images/hero-slide-06.webp" alt="Engenheiro analisando mapa de topografia em reunião"
+              loading="lazy" />
+
             <!-- Microinteração: Glass Card Flutuante de Autoridade -->
             <div style="position: absolute; bottom: 32px; left: 32px; right: 32px; z-index: 2;" class="anim-in d4">
-              <div class="glass-panel" style="padding: 24px; background: rgba(12, 17, 23, 0.70); border-color: rgba(255,255,255,0.1);">
-                <strong style="color: #80d1a8; font-size: 1.25rem; display: block; margin-bottom: 4px;">Método Estruturado</strong>
-                <p style="color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.5;">Acompanhamento técnico rígido do primeiro diagnóstico até a liberação final do registro no cartório.</p>
+              <div class="glass-panel"
+                style="padding: 24px; background: rgba(12, 17, 23, 0.70); border-color: rgba(255,255,255,0.1);">
+                <strong style="color: #80d1a8; font-size: 1.25rem; display: block; margin-bottom: 4px;">Método
+                  Estruturado</strong>
+                <p style="color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.5;">Acompanhamento técnico rígido
+                  do primeiro diagnóstico até a liberação final do registro no cartório.</p>
               </div>
             </div>
           </div>
-          
+
           <!-- Coluna Direita: Metodologia em Lista Flex -->
           <div style="display: block; margin-top: 0;">
             <div class="anim-in d1 eyebrow">Como Funciona</div>
             <h2 class="anim-in d2" style="margin-bottom: 16px;">Processo seguro e claro.</h2>
             <p class="text anim-in d3" style="margin-bottom: 40px; font-size: 1.125rem;">
-              Nossa metodologia elimina a burocracia e a insegurança. Conduzimos cada projeto de forma analítica para que exista total previsibilidade do campo à documentação.
+              Nossa metodologia elimina a burocracia e a insegurança. Conduzimos cada projeto de forma analítica para
+              que exista total previsibilidade do campo à documentação.
             </p>
 
             <!-- Lista Dinâmica de Processos -->
             <div style="display: flex; flex-direction: column; gap: 16px;">
-              
+
               <!-- Step 1 -->
-              <article class="process-card flashlight-card anim-in d4" style="display: flex; align-items: flex-start; gap: 20px; padding: 24px;" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
-                <div class="process-step" style="margin-bottom: 0; flex-shrink: 0; background: rgba(44,122,90,.1); color: var(--brand);">1</div>
+              <article class="process-card flashlight-card anim-in d4"
+                style="display: flex; align-items: flex-start; gap: 20px; padding: 24px;"
+                onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+                <div class="process-step"
+                  style="margin-bottom: 0; flex-shrink: 0; background: rgba(44,122,90,.1); color: var(--brand);">1</div>
                 <div>
                   <h3 style="font-size: 1.125rem; margin-bottom: 6px;">Diagnóstico e Estratégia</h3>
-                  <p style="margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--text-soft);">Análise investigativa das matrículas e entendimento fotogramétrico da área para traçarmos a melhor abordagem técnica.</p>
+                  <p style="margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--text-soft);">Análise
+                    investigativa das matrículas e entendimento fotogramétrico da área para traçarmos a melhor abordagem
+                    técnica.</p>
                 </div>
               </article>
 
               <!-- Step 2 -->
-              <article class="process-card flashlight-card anim-in d5" style="display: flex; align-items: flex-start; gap: 20px; padding: 24px;" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
-                <div class="process-step" style="margin-bottom: 0; flex-shrink: 0; background: rgba(44,122,90,.1); color: var(--brand);">2</div>
+              <article class="process-card flashlight-card anim-in d5"
+                style="display: flex; align-items: flex-start; gap: 20px; padding: 24px;"
+                onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+                <div class="process-step"
+                  style="margin-bottom: 0; flex-shrink: 0; background: rgba(44,122,90,.1); color: var(--brand);">2</div>
                 <div>
                   <h3 style="font-size: 1.125rem; margin-bottom: 6px;">Levantamento em Campo</h3>
-                  <p style="margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--text-soft);">Operação no terreno utilizando receptores RTK de alta precisão e Drones, aferindo os vértices do imóvel com exatidão.</p>
+                  <p style="margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--text-soft);">Operação no
+                    terreno utilizando receptores RTK de alta precisão e Drones, aferindo os vértices do imóvel com
+                    exatidão.</p>
                 </div>
               </article>
 
               <!-- Step 3 -->
-              <article class="process-card flashlight-card anim-in d6" style="display: flex; align-items: flex-start; gap: 20px; padding: 24px;" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
-                <div class="process-step" style="margin-bottom: 0; flex-shrink: 0; background: rgba(44,122,90,.1); color: var(--brand);">3</div>
+              <article class="process-card flashlight-card anim-in d6"
+                style="display: flex; align-items: flex-start; gap: 20px; padding: 24px;"
+                onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+                <div class="process-step"
+                  style="margin-bottom: 0; flex-shrink: 0; background: rgba(44,122,90,.1); color: var(--brand);">3</div>
                 <div>
                   <h3 style="font-size: 1.125rem; margin-bottom: 6px;">Engenharia e Processamento</h3>
-                  <p style="margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--text-soft);">Geoprocessamento de dados para emissão de plantas, memoriais descritivos rigorosos e geração de dossiês cartográficos.</p>
+                  <p style="margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--text-soft);">Geoprocessamento
+                    de dados para emissão de plantas, memoriais descritivos rigorosos e geração de dossiês
+                    cartográficos.</p>
                 </div>
               </article>
 
               <!-- Step 4 -->
-              <article class="process-card flashlight-card anim-in d6" style="display: flex; align-items: flex-start; gap: 20px; padding: 24px; transition-delay: .7s;" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
-                <div class="process-step" style="margin-bottom: 0; flex-shrink: 0; background: rgba(44,122,90,.1); color: var(--brand);">4</div>
+              <article class="process-card flashlight-card anim-in d6"
+                style="display: flex; align-items: flex-start; gap: 20px; padding: 24px; transition-delay: .7s;"
+                onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+                <div class="process-step"
+                  style="margin-bottom: 0; flex-shrink: 0; background: rgba(44,122,90,.1); color: var(--brand);">4</div>
                 <div>
                   <h3 style="font-size: 1.125rem; margin-bottom: 6px;">Apoio Cartorial Completo</h3>
-                  <p style="margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--text-soft);">Trâmites burocráticos simplificados via encaminhamento direto aos sistemas como SIGEF/INCRA, Prefeituras e Ofício de Registro.</p>
+                  <p style="margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--text-soft);">Trâmites
+                    burocráticos simplificados via encaminhamento direto aos sistemas como SIGEF/INCRA, Prefeituras e
+                    Ofício de Registro.</p>
                 </div>
               </article>
 
             </div>
           </div>
-          
+
         </div>
       </div>
     </section>
@@ -405,86 +603,139 @@
     <!-- ═══════ QUARTA DOBRA: DIFERENCIAIS E AUTORIDADE ═══════ -->
     <section class="section section-soft" id="diferenciais" style="position: relative; z-index: 8;">
       <div class="container">
-        
+
         <!-- Cabeçalho da Seção -->
         <div class="section-head">
           <div class="anim-in d1 eyebrow">Autoridade Técnica</div>
-          <h2 class="anim-in d2">Por que confiar na Alta Precisão?</h2>
+          <h2 class="anim-in d2">Por que confiar na Plenna?</h2>
           <p class="text anim-in d3" style="font-size: 1.125rem; max-width: 680px; margin: 16px auto 0;">
-            Apresentamos um histórico sólido e uma infraestrutura completa para que você tenha a tranquilidade de estar sendo guiado pelos melhores especialistas.
+            Apresentamos um histórico sólido e uma infraestrutura completa para que você tenha a tranquilidade de estar
+            sendo guiado pelos melhores especialistas.
           </p>
         </div>
-        
+
         <!-- Grid Mista: Cards de Diferencial e Painel de Métricas -->
         <div class="about-grid" style="align-items: stretch;">
-          
+
           <!-- Lado Esquerdo: Grid de Diferenciais 2x2 -->
           <div class="about-panel" style="margin-top: 0; align-content: center; gap: 20px;">
-            
+
             <!-- Diferencial 1 -->
-            <article class="about-item flashlight-card anim-in d4" style="padding: 28px; box-shadow: 0 10px 30px rgba(12,18,28,.04); border-color: rgba(0,0,0,0.06); display: flex; flex-direction: column;" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
-              <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(44,122,90,.08); color: var(--brand); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <article class="about-item flashlight-card anim-in d4"
+              style="padding: 28px; box-shadow: 0 10px 30px rgba(12,18,28,.04); border-color: rgba(0,0,0,0.06); display: flex; flex-direction: column;"
+              onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+              <div
+                style="width: 42px; height: 42px; border-radius: 12px; background: rgba(44,122,90,.08); color: var(--brand); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
               </div>
-              <strong style="color: var(--text); font-size: 1.15rem; font-weight: 800; margin-bottom: 8px;">Campo e Gabinete</strong>
-              <p style="color: var(--text-soft); font-size: 0.95rem; line-height: 1.5; margin: 0;">Trabalhamos da visita técnica in loco com equipamentos próprios à finalização do rígido dossiê registral em nosso escritório.</p>
+              <strong style="color: var(--text); font-size: 1.15rem; font-weight: 800; margin-bottom: 8px;">Campo e
+                Gabinete</strong>
+              <p style="color: var(--text-soft); font-size: 0.95rem; line-height: 1.5; margin: 0;">Trabalhamos da visita
+                técnica in loco com equipamentos próprios à finalização do rígido dossiê registral em nosso escritório.
+              </p>
             </article>
 
             <!-- Diferencial 2 -->
-            <article class="about-item flashlight-card anim-in d5" style="padding: 28px; box-shadow: 0 10px 30px rgba(12,18,28,.04); border-color: rgba(0,0,0,0.06); display: flex; flex-direction: column;" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
-              <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(44,122,90,.08); color: var(--brand); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <article class="about-item flashlight-card anim-in d5"
+              style="padding: 28px; box-shadow: 0 10px 30px rgba(12,18,28,.04); border-color: rgba(0,0,0,0.06); display: flex; flex-direction: column;"
+              onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+              <div
+                style="width: 42px; height: 42px; border-radius: 12px; background: rgba(44,122,90,.08); color: var(--brand); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
               </div>
-              <strong style="color: var(--text); font-size: 1.15rem; font-weight: 800; margin-bottom: 8px;">Rigor Topográfico</strong>
-              <p style="color: var(--text-soft); font-size: 0.95rem; line-height: 1.5; margin: 0;">Nossas métricas e plantas atendem estritamente as portarias e regulamentações do SIGEF, INCRA e prefeituras locais.</p>
+              <strong style="color: var(--text); font-size: 1.15rem; font-weight: 800; margin-bottom: 8px;">Rigor
+                Topográfico</strong>
+              <p style="color: var(--text-soft); font-size: 0.95rem; line-height: 1.5; margin: 0;">Nossas métricas e
+                plantas atendem estritamente as portarias e regulamentações do SIGEF, INCRA e prefeituras locais.</p>
             </article>
 
             <!-- Diferencial 3 -->
-            <article class="about-item flashlight-card anim-in d6" style="padding: 28px; box-shadow: 0 10px 30px rgba(12,18,28,.04); border-color: rgba(0,0,0,0.06); display: flex; flex-direction: column;" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
-              <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(44,122,90,.08); color: var(--brand); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <article class="about-item flashlight-card anim-in d6"
+              style="padding: 28px; box-shadow: 0 10px 30px rgba(12,18,28,.04); border-color: rgba(0,0,0,0.06); display: flex; flex-direction: column;"
+              onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+              <div
+                style="width: 42px; height: 42px; border-radius: 12px; background: rgba(44,122,90,.08); color: var(--brand); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
               </div>
-              <strong style="color: var(--text); font-size: 1.15rem; font-weight: 800; margin-bottom: 8px;">Agilidade Cartorial</strong>
-              <p style="color: var(--text-soft); font-size: 0.95rem; line-height: 1.5; margin: 0;">Organizamos o acervo final com excelência burocrática, previnindo devoluções por insuficiência de documentação no cartório.</p>
+              <strong style="color: var(--text); font-size: 1.15rem; font-weight: 800; margin-bottom: 8px;">Agilidade
+                Cartorial</strong>
+              <p style="color: var(--text-soft); font-size: 0.95rem; line-height: 1.5; margin: 0;">Organizamos o acervo
+                final com excelência burocrática, previnindo devoluções por insuficiência de documentação no cartório.
+              </p>
             </article>
 
             <!-- Diferencial 4 -->
-            <article class="about-item flashlight-card anim-in d6" style="padding: 28px; box-shadow: 0 10px 30px rgba(12,18,28,.04); border-color: rgba(0,0,0,0.06); display: flex; flex-direction: column; transition-delay: .7s;" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
-              <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(44,122,90,.08); color: var(--brand); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
+            <article class="about-item flashlight-card anim-in d6"
+              style="padding: 28px; box-shadow: 0 10px 30px rgba(12,18,28,.04); border-color: rgba(0,0,0,0.06); display: flex; flex-direction: column; transition-delay: .7s;"
+              onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+              <div
+                style="width: 42px; height: 42px; border-radius: 12px; background: rgba(44,122,90,.08); color: var(--brand); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
+                  <line x1="9" y1="3" x2="9" y2="18"></line>
+                  <line x1="15" y1="6" x2="15" y2="21"></line>
+                </svg>
               </div>
-              <strong style="color: var(--text); font-size: 1.15rem; font-weight: 800; margin-bottom: 8px;">Rural e Urbano</strong>
-              <p style="color: var(--text-soft); font-size: 0.95rem; line-height: 1.5; margin: 0;">Domínio técnico comprovado em vastas glebas agrícolas e na densa regulação fundiária de áreas loteadas urbanas.</p>
+              <strong style="color: var(--text); font-size: 1.15rem; font-weight: 800; margin-bottom: 8px;">Rural e
+                Urbano</strong>
+              <p style="color: var(--text-soft); font-size: 0.95rem; line-height: 1.5; margin: 0;">Domínio técnico
+                comprovado em vastas glebas agrícolas e na densa regulação fundiária de áreas loteadas urbanas.</p>
             </article>
 
           </div>
-          
+
           <!-- Lado Direito: Apoio Visual (Painel Institucional Métrica) -->
-          <div class="cta-box anim-in d3" style="min-height: auto; border-radius: 28px; display: flex; flex-direction: column; box-shadow: 0 24px 60px rgba(0,0,0,.15);">
-            <img src="assets/images/hero-slide-02.webp" alt="Topógrafo usando equipamento de precisão em base rural" loading="lazy" style="border-radius: 28px;" />
-            
-            <div class="cta-overlay" style="min-height: unset; flex-grow: 1; border-radius: 28px; padding: 48px; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(180deg, transparent 15%, rgba(12,17,23,.94) 100%);">
+          <div class="cta-box anim-in d3"
+            style="min-height: auto; border-radius: 28px; display: flex; flex-direction: column; box-shadow: 0 24px 60px rgba(0,0,0,.15);">
+            <img src="assets/images/hero-slide-02.webp" alt="Topógrafo usando equipamento de precisão em base rural"
+              loading="lazy" style="border-radius: 28px;" />
+
+            <div class="cta-overlay"
+              style="min-height: unset; flex-grow: 1; border-radius: 28px; padding: 48px; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(180deg, transparent 15%, rgba(12,17,23,.94) 100%);">
               <div style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between;">
                 <!-- Métrica 1 -->
                 <div>
-                  <h4 style="font-size: 2.8rem; font-weight: 800; color: #80d1a8; line-height: 1; margin-bottom: 8px;">100<span style="font-size: 1.8rem;">%</span></h4>
-                  <span style="color: #fff; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em;">Conformidade INCRA</span>
+                  <h4 style="font-size: 2.8rem; font-weight: 800; color: #80d1a8; line-height: 1; margin-bottom: 8px;">
+                    100<span style="font-size: 1.8rem;">%</span></h4>
+                  <span
+                    style="color: #fff; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em;">Conformidade
+                    INCRA</span>
                 </div>
                 <!-- Métrica 2 -->
                 <div>
-                  <h4 style="font-size: 2.8rem; font-weight: 800; color: #80d1a8; line-height: 1; margin-bottom: 8px;">+15<span style="font-size: 1.4rem;">anos</span></h4>
-                  <span style="color: #fff; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em;">Atuação em campo</span>
+                  <h4 style="font-size: 2.8rem; font-weight: 800; color: #80d1a8; line-height: 1; margin-bottom: 8px;">
+                    +15<span style="font-size: 1.4rem;">anos</span></h4>
+                  <span
+                    style="color: #fff; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em;">Atuação
+                    em campo</span>
                 </div>
               </div>
             </div>
           </div>
-          
+
         </div>
 
         <!-- Micro-mensagem de fechamento -->
-        <div class="anim-in d6" style="transition-delay: .8s; max-width: 840px; margin: 56px auto 0; text-align: center; padding-top: 36px; border-top: 1px solid rgba(0,0,0,.06);">
+        <div class="anim-in d6"
+          style="transition-delay: .8s; max-width: 840px; margin: 56px auto 0; text-align: center; padding-top: 36px; border-top: 1px solid rgba(0,0,0,.06);">
           <p style="font-size: 1.05rem; font-weight: 500; color: var(--text-soft); font-style: italic;">
-            "Acreditamos que todo patrimônio exige responsabilidade técnica. Unimos o rigor pragmático do campo à burocracia do escritório para salvaguardar a sua propriedade contra inconformidades."
+            "Acreditamos que todo patrimônio exige responsabilidade técnica. Unimos o rigor pragmático do campo à
+            burocracia do escritório para salvaguardar a sua propriedade contra inconformidades."
           </p>
         </div>
 
@@ -492,122 +743,185 @@
     </section>
 
     <!-- ═══════ QUINTA DOBRA: CONFIANÇA E ESTRUTURA (A EMPRESA) ═══════ -->
-    <section class="cta" id="empresa" style="position: relative; overflow: hidden; background: radial-gradient(800px 400px at 50% 100%, rgba(44,122,90,.15), transparent 70%), linear-gradient(180deg, #101a23 0%, #0c1117 100%); border-top: 1px solid rgba(255,255,255,.05); border-radius: 0; box-shadow: none;">
-      
+    <section class="cta" id="empresa"
+      style="position: relative; overflow: hidden; background: radial-gradient(800px 400px at 50% 100%, rgba(44,122,90,.15), transparent 70%), linear-gradient(180deg, #101a23 0%, #0c1117 100%); border-top: 1px solid rgba(255,255,255,.05); border-radius: 0; box-shadow: none;">
+
       <!-- Fundo de Partículas Escalonado (Reuso da Hero) -->
       <div class="hero-particles" style="z-index: 0;">
-        <div class="orb orb-2" style="background: rgba(128,209,168,.1) !important; width: 400px; height: 400px; top: -100px; left: -100px;"></div>
-        <div class="orb orb-3" style="background: rgba(44,122,90,.15) !important; bottom: -50px; right: -50px; left: auto; top: auto; animation-delay: 2s;"></div>
+        <div class="orb orb-2"
+          style="background: rgba(128,209,168,.1) !important; width: 400px; height: 400px; top: -100px; left: -100px;">
+        </div>
+        <div class="orb orb-3"
+          style="background: rgba(44,122,90,.15) !important; bottom: -50px; right: -50px; left: auto; top: auto; animation-delay: 2s;">
+        </div>
       </div>
 
       <div class="container" style="position: relative; z-index: 2;">
-        
+
         <!-- Cabeçalho Institucional -->
         <div class="section-head">
           <div class="anim-in d1 eyebrow" style="color: #80d1a8; margin-bottom: 24px;">Excelência Institucional</div>
           <h2 class="anim-in d2" style="color: #fff;">Infraestrutura desenhada para precisão absoluta.</h2>
           <p class="anim-in d3" style="font-size: 1.15rem; color: #aebbc5; max-width: 680px; margin: 20px auto 0;">
-            Muito além de medir terras, operamos um núcleo técnico focado para solucionar o seu passivo documental e garantir segurança de ponta a ponta.
+            Muito além de medir terras, operamos um núcleo técnico focado para solucionar o seu passivo documental e
+            garantir segurança de ponta a ponta.
           </p>
         </div>
 
         <!-- Grid Glassmorphism Premium -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; max-width: 1040px; margin: 0 auto;">
-          
+        <div
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; max-width: 1040px; margin: 0 auto;">
+
           <!-- Pilar 1 -->
-          <article class="glass-panel flashlight-card anim-in d4" style="padding: 36px; border-radius: 28px; display: flex; flex-direction: column;" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
-            <div style="width: 56px; height: 56px; border-radius: 16px; background: rgba(128,209,168,.08); color: #80d1a8; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; border: 1px solid rgba(128,209,168,.15);">
-               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <article class="glass-panel flashlight-card anim-in d4"
+            style="padding: 36px; border-radius: 28px; display: flex; flex-direction: column;"
+            onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+            <div
+              style="width: 56px; height: 56px; border-radius: 16px; background: rgba(128,209,168,.08); color: #80d1a8; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; border: 1px solid rgba(128,209,168,.15);">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
             </div>
             <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 12px; color: #fff;">Blindagem Cartorial</h3>
-            <p style="color: #aebbc5; font-size: 1rem; line-height: 1.6; margin: 0;">Nenhum levantamento sai do nosso gabinete sem que passe por uma auditoria criteriosa de viabilidade técnica e total conformidade com a Lei.</p>
+            <p style="color: #aebbc5; font-size: 1rem; line-height: 1.6; margin: 0;">Nenhum levantamento sai do nosso
+              gabinete sem que passe por uma auditoria criteriosa de viabilidade técnica e total conformidade com a Lei.
+            </p>
           </article>
 
           <!-- Pilar 2 -->
-          <article class="glass-panel flashlight-card anim-in d5" style="padding: 36px; border-radius: 28px; display: flex; flex-direction: column;" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
-            <div style="width: 56px; height: 56px; border-radius: 16px; background: rgba(128,209,168,.08); color: #80d1a8; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; border: 1px solid rgba(128,209,168,.15);">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          <article class="glass-panel flashlight-card anim-in d5"
+            style="padding: 36px; border-radius: 28px; display: flex; flex-direction: column;"
+            onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+            <div
+              style="width: 56px; height: 56px; border-radius: 16px; background: rgba(128,209,168,.08); color: #80d1a8; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; border: 1px solid rgba(128,209,168,.15);">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+              </svg>
             </div>
             <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 12px; color: #fff;">Gestão Tecnológica</h3>
-            <p style="color: #aebbc5; font-size: 1rem; line-height: 1.6; margin: 0;">Operamos com Receptores RTK de dupla frequência e Drones de última geração para extrair os níveis de precisão incontestáveis em campo.</p>
+            <p style="color: #aebbc5; font-size: 1rem; line-height: 1.6; margin: 0;">Operamos com Receptores RTK de
+              dupla frequência e Drones de última geração para extrair os níveis de precisão incontestáveis em campo.
+            </p>
           </article>
 
           <!-- Pilar 3 -->
-          <article class="glass-panel flashlight-card anim-in d6" style="padding: 36px; border-radius: 28px; display: flex; flex-direction: column;" onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
-            <div style="width: 56px; height: 56px; border-radius: 16px; background: rgba(128,209,168,.08); color: #80d1a8; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; border: 1px solid rgba(128,209,168,.15);">
-               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+          <article class="glass-panel flashlight-card anim-in d6"
+            style="padding: 36px; border-radius: 28px; display: flex; flex-direction: column;"
+            onmousemove="this.style.setProperty('--mx', event.offsetX + 'px'); this.style.setProperty('--my', event.offsetY + 'px')">
+            <div
+              style="width: 56px; height: 56px; border-radius: 16px; background: rgba(128,209,168,.08); color: #80d1a8; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; border: 1px solid rgba(128,209,168,.15);">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                <path d="M2 12h20"></path>
+              </svg>
             </div>
-            <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 12px; color: #fff;">Controle Transparente</h3>
-            <p style="color: #aebbc5; font-size: 1rem; line-height: 1.6; margin: 0;">O projeto caminha de mãos dadas com o cliente. Entregamos clareza passo a passo, sem surpresas técnicas ou atrasos ocultos.</p>
+            <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 12px; color: #fff;">Controle Transparente
+            </h3>
+            <p style="color: #aebbc5; font-size: 1rem; line-height: 1.6; margin: 0;">O projeto caminha de mãos dadas com
+              o cliente. Entregamos clareza passo a passo, sem surpresas técnicas ou atrasos ocultos.</p>
           </article>
 
         </div>
-        
+
         <!-- Micro-mensagem de fechamento -->
-        <div class="anim-in d6" style="transition-delay: .8s; text-align: center; margin-top: 56px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,.08);">
-          <p style="font-size: 1.05rem; font-weight: 500; color: #aebbc5; font-style: italic; max-width: 600px; margin: 0 auto;">
-            "Acreditamos no rigor cartorial aliado à precisão do campo. Cada vetor demarcado e cada projeto validado é a segurança material do seu patrimônio."
+        <div class="anim-in d6"
+          style="transition-delay: .8s; text-align: center; margin-top: 56px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,.08);">
+          <p
+            style="font-size: 1.05rem; font-weight: 500; color: #aebbc5; font-style: italic; max-width: 600px; margin: 0 auto;">
+            "Acreditamos no rigor cartorial aliado à precisão do campo. Cada vetor demarcado e cada projeto validado é a
+            segurança material do seu patrimônio."
           </p>
         </div>
 
       </div>
     </section>
-      </div>
+    </div>
     </section>
 
     <!-- ═══════ SEXTA DOBRA: CONVERSÃO (CTA FINAL) ═══════ -->
     <section class="section section-soft" id="orcamento" style="position: relative; z-index: 10;">
       <div class="container">
-        
+
         <div class="cta-box anim-in d2" style="box-shadow: 0 40px 100px rgba(12,18,28,.15);">
           <!-- Imagem de Fundo Premium -->
-          <img src="assets/images/service-area-03.webp" alt="Equipe de engenheiros analisando mapa e documentos" loading="lazy" style="transform: scale(1.02); filter: saturate(1.1);" />
-          
-          <div class="cta-overlay" style="background: linear-gradient(90deg, rgba(8,12,16,.96) 0%, rgba(8,12,16,.85) 50%, rgba(8,12,16,.1) 100%);">
+          <img src="assets/images/service-area-03.webp" alt="Equipe de engenheiros analisando mapa e documentos"
+            loading="lazy" style="transform: scale(1.02); filter: saturate(1.1);" />
+
+          <div class="cta-overlay"
+            style="background: linear-gradient(90deg, rgba(8,12,16,.96) 0%, rgba(8,12,16,.85) 50%, rgba(8,12,16,.1) 100%);">
             <div class="cta-copy" style="max-width: 680px; padding: 64px 56px;">
-              
+
               <div class="anim-in d3 eyebrow" style="color: #80d1a8; margin-bottom: 20px;">Orçamento Técnico</div>
-              
+
               <h2 class="anim-in d4" style="color: #fff; font-size: clamp(2.4rem, 4vw, 3.6rem); margin-bottom: 16px;">
                 Pronto para regularizar seu imóvel com segurança?
               </h2>
-              
+
               <p class="anim-in d5" style="font-size: 1.15rem; color: #cbd5dc; margin-bottom: 40px; line-height: 1.6;">
-                Nossa equipe de engenharia está pronta para analisar a fundo o seu caso. Sem complexidades burocráticas no atendimento. Inicie o contato agora e tenha um pré-diagnóstico direto com nossos especialistas.
+                Nossa equipe de engenharia está pronta para analisar a fundo o seu caso. Sem complexidades burocráticas
+                no atendimento. Inicie o contato agora e tenha um pré-diagnóstico direto com nossos especialistas.
               </p>
-              
+
               <!-- Botões CTA (Primary e Secondary) -->
               <div class="hero-actions anim-in d6" style="margin-top: 0;">
-                <a class="button btn-shimmer glow-pulse" href="#whatsapp" style="padding: 0 32px; min-height: 64px; font-size: 1.1rem; box-shadow: 0 10px 30px rgba(44,122,90,.3);">
+                <a class="button btn-shimmer glow-pulse" href="#whatsapp"
+                  style="padding: 0 32px; min-height: 64px; font-size: 1.1rem; box-shadow: 0 10px 30px rgba(44,122,90,.3);">
                   <span style="position: relative; z-index: 1; display: flex; align-items: center; gap: 8px;">
-                     <!-- Ícone WhatsApp -->
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <!-- Ícone WhatsApp -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                      </path>
+                    </svg>
                     Falar com Especialistas
                   </span>
                 </a>
-                
-                <a class="button outline" href="#processo" style="min-height: 64px; font-size: 1.1rem; padding: 0 32px; border-color: rgba(255,255,255,0.25);">
+
+                <a class="button outline" href="#processo"
+                  style="min-height: 64px; font-size: 1.1rem; padding: 0 32px; border-color: rgba(255,255,255,0.25);">
                   Revisar método
                 </a>
               </div>
-              
+
               <!-- Micro Prova de Segurança -->
-              <div class="anim-in d6" style="display: flex; flex-wrap: wrap; gap: 24px; margin-top: 36px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.08); transition-delay: .7s;">
-                <div style="display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #aebbc5; font-weight: 500;">
-                  <div style="width: 24px; height: 24px; border-radius: 99px; background: rgba(128,209,168,.12); color: #80d1a8; display: flex; align-items: center; justify-content: center;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <div class="anim-in d6"
+                style="display: flex; flex-wrap: wrap; gap: 24px; margin-top: 36px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.08); transition-delay: .7s;">
+                <div
+                  style="display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #aebbc5; font-weight: 500;">
+                  <div
+                    style="width: 24px; height: 24px; border-radius: 99px; background: rgba(128,209,168,.12); color: #80d1a8; display: flex; align-items: center; justify-content: center;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
                   </div>
                   Atendimento ágil
                 </div>
-                <div style="display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #aebbc5; font-weight: 500;">
-                  <div style="width: 24px; height: 24px; border-radius: 99px; background: rgba(128,209,168,.12); color: #80d1a8; display: flex; align-items: center; justify-content: center;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <div
+                  style="display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #aebbc5; font-weight: 500;">
+                  <div
+                    style="width: 24px; height: 24px; border-radius: 99px; background: rgba(128,209,168,.12); color: #80d1a8; display: flex; align-items: center; justify-content: center;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
                   </div>
                   Sigilo documental
                 </div>
-                <div style="display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #aebbc5; font-weight: 500;">
-                  <div style="width: 24px; height: 24px; border-radius: 99px; background: rgba(128,209,168,.12); color: #80d1a8; display: flex; align-items: center; justify-content: center;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <div
+                  style="display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #aebbc5; font-weight: 500;">
+                  <div
+                    style="width: 24px; height: 24px; border-radius: 99px; background: rgba(128,209,168,.12); color: #80d1a8; display: flex; align-items: center; justify-content: center;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
                   </div>
                   Retorno claro
                 </div>
@@ -637,80 +951,123 @@
       row-gap: 48px;
       margin-bottom: 72px;
     }
-    
+
     /* Utility class para garantir que strings vitais não quebrem no Desktop */
     @media (min-width: 1025px) {
-      .nowrap-desktop { white-space: nowrap; }
+      .nowrap-desktop {
+        white-space: nowrap;
+      }
     }
-    
+
     @media (max-width: 1100px) {
-      .footer-grid-5 { grid-template-columns: 1.5fr 2fr 1.5fr; gap: 40px; }
+      .footer-grid-5 {
+        grid-template-columns: 1.5fr 2fr 1.5fr;
+        gap: 40px;
+      }
     }
+
     @media (max-width: 860px) {
-      .footer-grid-5 { grid-template-columns: 1fr 1fr; }
+      .footer-grid-5 {
+        grid-template-columns: 1fr 1fr;
+      }
     }
+
     @media (max-width: 580px) {
-      .footer-grid-5 { grid-template-columns: 1fr; }
+      .footer-grid-5 {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 
   <!-- ═══════ SÉTIMA DOBRA: RODAPÉ PREMIUM (FOOTER) ═══════ -->
   <footer class="site-footer" style="position: relative; z-index: 10;">
     <div class="container">
-      
+
       <!-- Footer Grid: 5 Colunas -->
       <div class="footer-grid-5">
-        
+
         <!-- Coluna 1: Institucional -->
         <div class="footer-col anim-in d1">
-          <a class="logo" href="#" style="color: #fff; font-size: 1.5rem; display: inline-block; margin-bottom: 16px; font-weight: 800; text-decoration: none;">
-            Alta <span style="font-weight: 400; color: #80d1a8;">Precisão</span>
+          <a class="logo" href="#"
+            style="color: #fff; font-size: 1.5rem; display: inline-block; margin-bottom: 16px; font-weight: 800; text-decoration: none;">
+            Plenna <span style="font-weight: 400; color: #80d1a8;">Topografia</span>
           </a>
           <p style="font-size: 0.95rem; line-height: 1.6; max-width: 280px; margin: 0; color: #aebbc5;">
             Topografia, georreferenciamento e regularização com precisão técnica e clareza documental absoluta.
           </p>
         </div>
-        
+
         <!-- Coluna 2: Serviços -->
         <div class="footer-col anim-in d2">
           <h4>Serviços</h4>
           <nav class="footer-nav" style="display: flex; flex-direction: column; gap: 16px;">
-            <a href="#" style="display: flex; align-items: flex-start; gap: 12px; text-decoration: none;" class="footer-link">
+            <a href="#" style="display: flex; align-items: flex-start; gap: 12px; text-decoration: none;"
+              class="footer-link">
               <span class="footer-icon" style="color: #80d1a8; margin-top: 2px;">
                 <!-- Levantamento Topográfico: Map / Grid -->
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
+                  <line x1="9" y1="3" x2="9" y2="18"></line>
+                  <line x1="15" y1="6" x2="15" y2="21"></line>
+                </svg>
               </span>
               <span class="footer-text nowrap-desktop">Levantamento Topográfico</span>
             </a>
-            
-            <a href="#" style="display: flex; align-items: flex-start; gap: 12px; text-decoration: none;" class="footer-link">
+
+            <a href="#" style="display: flex; align-items: flex-start; gap: 12px; text-decoration: none;"
+              class="footer-link">
               <span class="footer-icon" style="color: #80d1a8; margin-top: 2px;">
                 <!-- Georreferenciamento: Map Pin / GPS -->
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
               </span>
               <span class="footer-text nowrap-desktop">Georreferenciamento</span>
             </a>
-            
-            <a href="#" style="display: flex; align-items: flex-start; gap: 12px; text-decoration: none;" class="footer-link">
+
+            <a href="#" style="display: flex; align-items: flex-start; gap: 12px; text-decoration: none;"
+              class="footer-link">
               <span class="footer-icon" style="color: #80d1a8; margin-top: 2px;">
                 <!-- Regularização de Imóveis: Document / Checklist -->
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
               </span>
               <span class="footer-text nowrap-desktop">Regularização de Imóveis</span>
             </a>
-            
-            <a href="#" style="display: flex; align-items: flex-start; gap: 12px; text-decoration: none;" class="footer-link">
+
+            <a href="#" style="display: flex; align-items: flex-start; gap: 12px; text-decoration: none;"
+              class="footer-link">
               <span class="footer-icon" style="color: #80d1a8; margin-top: 2px;">
                 <!-- Retificação de Área: Ruler / Edit -->
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="10"></line><line x1="10" y1="6" x2="10" y2="10"></line><line x1="14" y1="6" x2="14" y2="10"></line><line x1="18" y1="6" x2="18" y2="10"></line></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="6" width="20" height="12" rx="2" ry="2"></rect>
+                  <line x1="6" y1="6" x2="6" y2="10"></line>
+                  <line x1="10" y1="6" x2="10" y2="10"></line>
+                  <line x1="14" y1="6" x2="14" y2="10"></line>
+                  <line x1="18" y1="6" x2="18" y2="10"></line>
+                </svg>
               </span>
               <span class="footer-text nowrap-desktop">Retificação de Área</span>
             </a>
-            
-            <a href="#" style="display: flex; align-items: flex-start; gap: 12px; text-decoration: none;" class="footer-link">
+
+            <a href="#" style="display: flex; align-items: flex-start; gap: 12px; text-decoration: none;"
+              class="footer-link">
               <span class="footer-icon" style="color: #80d1a8; margin-top: 2px;">
                 <!-- Apoio Documental: Archive / Folder -->
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                </svg>
               </span>
               <span class="footer-text nowrap-desktop">Apoio Documental</span>
             </a>
@@ -721,28 +1078,49 @@
         <div class="footer-col anim-in d3">
           <h4>Navegação</h4>
           <nav class="footer-nav" style="display: flex; flex-direction: column; gap: 14px;">
-            <a href="#home" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Início</a>
-            <a href="#solucoes" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Serviços</a>
-            <a href="#processo" class="nowrap-desktop" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Como funciona</a>
-            <a href="#diferenciais" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Diferenciais</a>
-            <a href="#orcamento" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Contato</a>
+            <a href="#home" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;"
+              onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Início</a>
+            <a href="#solucoes" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;"
+              onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Serviços</a>
+            <a href="#processo" class="nowrap-desktop"
+              style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;"
+              onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Como funciona</a>
+            <a href="#diferenciais"
+              style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;"
+              onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Diferenciais</a>
+            <a href="#orcamento" style="display: block; text-decoration: none; color: #aebbc5; transition: color .3s;"
+              onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Contato</a>
           </nav>
         </div>
-        
+
         <!-- Coluna 4: Contato -->
         <div class="footer-col anim-in d4">
           <h4>Contato</h4>
           <nav class="footer-nav">
             <a href="#whatsapp" style="display: flex; align-items: center; gap: 8px;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#80d1a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-              (00) 00000-0000
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#80d1a8" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                </path>
+              </svg>
+              (99) 98533-9045
             </a>
-            <a href="mailto:contato@altaprecisao.com.br" style="display: flex; align-items: center; gap: 8px;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#80d1a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-              contato@altaprecisao.com.br
+            <a href="mailto:plenna777@gmail.com" style="display: flex; align-items: center; gap: 8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#80d1a8" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              plenna777@gmail.com
             </a>
-            <div style="display: flex; align-items: flex-start; gap: 8px; margin-top: 4px; font-size: 0.95rem; line-height: 1.5; color: #aebbc5;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#80d1a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 4px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <div
+              style="display: flex; align-items: flex-start; gap: 8px; margin-top: 4px; font-size: 0.95rem; line-height: 1.5; color: #aebbc5;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#80d1a8" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 4px;">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
               <span>Atendimento unificado em todo o território nacional.</span>
             </div>
           </nav>
@@ -751,40 +1129,51 @@
         <!-- Coluna 5: CTA Rápido -->
         <div class="footer-col anim-in d5">
           <h4 style="margin-bottom: 24px;">Fale com um especialista</h4>
-          <a href="#orcamento" class="button btn-shimmer" style="padding: 0 24px; min-height: 48px; font-size: 0.95rem; display: inline-flex; width: 100%; justify-content: center; box-shadow: 0 10px 20px rgba(44,122,90,.15); border-radius: 99px;">
+          <a href="#orcamento" class="button btn-shimmer"
+            style="padding: 0 24px; min-height: 48px; font-size: 0.95rem; display: inline-flex; width: 100%; justify-content: center; box-shadow: 0 10px 20px rgba(44,122,90,.15); border-radius: 99px;">
             <span style="position:relative; z-index:1;">Solicitar orçamento</span>
           </a>
         </div>
-        
+
       </div>
-      
+
       <!-- Footer Bottom (Copyright e Legal) -->
       <div class="footer-bottom anim-in d6" style="border-top-color: rgba(255,255,255,.05); padding-top: 24px;">
-        
+
         <div style="display: flex; flex-direction: column; gap: 4px; color: #aebbc5; flex: 1;">
-          <span style="font-weight: 500;">&copy; <script>document.write(new Date().getFullYear())</script> Alta Precisão Engenharia & Topografia.</span>
+          <span style="font-weight: 500;">&copy;
+            <script>document.write(new Date().getFullYear())</script> Plenna Topografia.
+          </span>
           <span style="font-size: 0.95rem; opacity: .7;">Todos os direitos reservados.</span>
         </div>
-        
+
         <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: flex-end;">
-          <a href="#" style="color: #aebbc5; text-decoration: none; font-size: 0.95rem; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Termos de Serviço</a>
-          <a href="#" style="color: #aebbc5; text-decoration: none; font-size: 0.95rem; transition: color .3s;" onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Política de Privacidade</a>
-          
+          <a href="#" style="color: #aebbc5; text-decoration: none; font-size: 0.95rem; transition: color .3s;"
+            onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Termos de Serviço</a>
+          <a href="#" style="color: #aebbc5; text-decoration: none; font-size: 0.95rem; transition: color .3s;"
+            onmouseover="this.style.color='#80d1a8'" onmouseout="this.style.color='#aebbc5'">Política de Privacidade</a>
+
           <!-- Back to Top Micro-button com Glassmorphism -->
-          <a href="#home" aria-label="Voltar ao Topo" class="glass-panel" style="width: 40px; height: 40px; border-radius: 99px; display: flex; align-items: center; justify-content: center; margin-left: 12px; transition: all .3s; text-decoration: none; color: #80d1a8; box-shadow: 0 10px 20px rgba(0,0,0,.2);" onmouseover="this.style.background='rgba(128,209,168,.1)';" onmouseout="this.style.background='rgba(255,255,255,.04)';">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+          <a href="#home" aria-label="Voltar ao Topo" class="glass-panel"
+            style="width: 40px; height: 40px; border-radius: 99px; display: flex; align-items: center; justify-content: center; margin-left: 12px; transition: all .3s; text-decoration: none; color: #80d1a8; box-shadow: 0 10px 20px rgba(0,0,0,.2);"
+            onmouseover="this.style.background='rgba(128,209,168,.1)';"
+            onmouseout="this.style.background='rgba(255,255,255,.04)';">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
           </a>
         </div>
-        
+
       </div>
-      
+
     </div>
   </footer>
 
   <!-- ═══════ SCRIPTS DA PÁGINA ═══════ -->
   <!-- Script global para interações como toggle menu que já vem no projeto -->
   <script src="assets/js/site.js"></script>
-  
+
   <!-- Script inline focado exclusivamente no visual Premium Design System -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -799,9 +1188,10 @@
           }
         });
       }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-      
+
       animEls.forEach(el => observer.observe(el));
     });
   </script>
 </body>
+
 </html>
