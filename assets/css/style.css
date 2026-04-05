@@ -841,6 +841,18 @@ p.text {
     flex-direction: column;
     align-items: flex-start
   }
+
+  .footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .footer-bottom > div:last-child {
+    justify-content: flex-start !important;
+    width: 100%;
+  }
 }
 
 @media (max-width: 420px) {
