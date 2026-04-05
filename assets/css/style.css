@@ -400,7 +400,8 @@ p.text {
   object-position: center 50%;
 }
 
-.service-card:hover .service-media img {
+.service-card:hover .service-media img,
+.service-card:hover .service-media-3 img {
   transform: scale(1.04)
 }
 
@@ -922,7 +923,8 @@ p.text {
 
   .button,
   .service-card,
-  .service-media img {
+  .service-media img,
+  .service-media-3 img {
     transition: none
   }
 }
