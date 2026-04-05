@@ -261,6 +261,57 @@
       color: #80d1a8;
     }
 
+    /* ── ESTADOS DO FORMULÁRIO (FORMSPREE) ── */
+    .form-status {
+      display: none;
+      text-align: center;
+      padding: 32px 0;
+    }
+    .form-status.is-active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: animFadeIn .5s ease;
+    }
+    .form-status-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .form-status-icon.success {
+      background: rgba(128, 209, 168, 0.15);
+      color: #80d1a8;
+      box-shadow: 0 0 30px rgba(128, 209, 168, 0.2);
+    }
+    .form-status h3 {
+      font-size: 1.8rem;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .form-status p {
+      font-size: 1.05rem;
+      color: #aebbc5;
+      max-width: 500px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+    @keyframes animFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .is-submitting {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .is-submitting .btn-shimmer::after {
+      animation: shimmer 1s ease infinite !important;
+    }
+
     /* ── ALTERNATIVA WHATSAPP ── */
     .whatsapp-alt {
       margin-top: 32px;
@@ -357,7 +408,7 @@
 
         <!-- Formulário Premium -->
         <div class="form-card anim-in d4">
-          <form action="#" method="POST" id="orcamentoForm"> <!-- A Action será definida pelo backend no futuro -->
+          <form action="https://formspree.io/f/mbdpqlyn" method="POST" id="orcamentoForm"> 
             
             <div class="form-row">
               <div class="form-group">
@@ -618,6 +669,77 @@
       }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
       animEls.forEach(el => observer.observe(el));
+
+      // INTEGRAÇÃO FORMSPREE VANILLA JS HOOK
+      const form = document.getElementById('orcamentoForm');
+      const submitBtn = form.querySelector('.form-submit-btn');
+      const btnText = submitBtn.querySelector('span');
+      
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Estado visual de envio
+        const originalText = btnText.innerText;
+        form.classList.add('is-submitting');
+        btnText.innerText = "Enviando análise...";
+
+        const data = new FormData(form);
+        const endpoint = form.getAttribute('action');
+
+        try {
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            body: data,
+            headers: {
+              'Accept': 'application/json'
+            }
+          });
+
+          if (response.ok) {
+            // Sucesso Premium
+            form.innerHTML = `
+              <div class="form-status is-active">
+                <div class="form-status-icon success">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <h3>Solicitação recebida com sucesso.</h3>
+                <p>Nossa equipe de engenharia avaliará as informações e um especialista fará contato direto com você para dar andamento ao seu caso profissional com clareza e transparência.</p>
+                <a href="index.html" class="button outline" style="padding: 0 32px;">Voltar ao início</a>
+              </div>
+            `;
+          } else {
+            // Tratar formspree JSON error fallback
+            let errorMessage = "Ocorreu um problema ao enviar o formulário.";
+            const errorData = await response.json();
+            if (Object.hasOwn(errorData, 'errors')) {
+              errorMessage = errorData.errors.map(error => error.message).join(", ");
+            }
+            throw new Error(errorMessage);
+          }
+        } catch (error) {
+          // Restaurar botão perfeitamente e avisar erro internamente
+          form.classList.remove('is-submitting');
+          btnText.innerText = originalText;
+          
+          let errorAlert = document.getElementById('form-error-alert');
+          if (!errorAlert) {
+            errorAlert = document.createElement('div');
+            errorAlert.id = 'form-error-alert';
+            errorAlert.style.marginTop = '24px';
+            errorAlert.style.padding = '16px';
+            errorAlert.style.background = 'rgba(239, 68, 68, 0.1)';
+            errorAlert.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+            errorAlert.style.borderRadius = '12px';
+            errorAlert.style.color = '#ef4444';
+            errorAlert.style.fontSize = '0.95rem';
+            errorAlert.style.textAlign = 'center';
+            form.querySelector('.form-submit-row').insertAdjacentElement('afterend', errorAlert);
+          }
+          errorAlert.innerText = "Ops! Houve uma instabilidade técnica. Por favor, tente novamente ou utilize o WhatsApp abaixo.";
+        }
+      });
     });
   </script>
 </body>
