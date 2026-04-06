@@ -709,6 +709,12 @@
           });
 
           if (response.ok) {
+            // Disparo de Conversão Oficial via GTM
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: "form_submit_success"
+            });
+
             // Sucesso Premium
             form.innerHTML = `
               <div class="form-status is-active">
